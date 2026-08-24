@@ -3,10 +3,19 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-/*
- * 不同粗定位姿态附近，同一末端方向所需的双电机组合可能不同。
- * 该枚举只在 BlockArm 内部使用，不向 Task 暴露。
- */
+/* 自动粗定位动作的目标位置，只在 BlockArm 内部使用。 */
+typedef enum
+{
+    BLOCK_ARM_TARGET_LOW_PICK_READY,
+    BLOCK_ARM_TARGET_HIGH_PICK_READY,
+    BLOCK_ARM_TARGET_PLACE_BOTTOM_READY,
+    BLOCK_ARM_TARGET_PLACE_LEVEL1_READY,
+    BLOCK_ARM_TARGET_PLACE_LEVEL2_READY,
+    BLOCK_ARM_TARGET_SAFE
+} BlockArmTarget_t;
+
+/* 不同粗定位姿态附近，同一末端方向所需的双电机组合可能不同。
+ * 该枚举只在 BlockArm 内部使用，不向 Task 暴露。*/
 typedef enum
 {
     BLOCK_ARM_FINE_PROFILE_NONE,
@@ -16,6 +25,7 @@ typedef enum
     BLOCK_ARM_FINE_PROFILE_PLACE_LEVEL1,
     BLOCK_ARM_FINE_PROFILE_PLACE_LEVEL2
 } BlockArmFineAdjustProfile_t;
+
 
 /* BlockArm 需要长期保存的最小内部数据。 */
 typedef struct
@@ -35,11 +45,11 @@ typedef struct
     float tolerance;
     uint16_t reached_count;
     uint32_t homing_count;
-    uint32_t motion_count;
+    uint32_t motion_count; /*用于超时判断*/
 
-    BlockArmFineAdjustProfile_t fine_adjust_profile;
-    BlockArmFineAdjustDirection_t fine_adjust_direction;
-    bool fine_adjust_active;
+    BlockArmFineAdjustProfile_t fine_adjust_profile; /*当前位于哪个粗定位区域*/
+    BlockArmFineAdjustDirection_t fine_adjust_direction; /*操作手按下的是哪个方向*/
+    bool fine_adjust_active; /*当前是否正在持续微调*/
 } BlockArm_t;
 
 static BlockArm_t block_arm;
@@ -59,10 +69,11 @@ static void BlockArm_UpdateFeedback(void)
 }
 
 /*
- * 记录自动动作对应的微调区域并进入 MOVING。
+ * 根据目标位置启动自动粗定位动作。
+ * 目标位置用于选择双电机目标；到达可微调区域时，同时记录对应的微调参数组。
  * 真实目标角度、轨迹和 Motor_SetPosition() 调用由后续实现补充。
  */
-static void BlockArm_StartAutoMove(BlockArmFineAdjustProfile_t profile)
+static void BlockArm_StartAutoMove(BlockArmTarget_t target)
 {
     if (block_arm.state != BLOCK_ARM_READY &&
         block_arm.state != BLOCK_ARM_REACHED &&
@@ -71,13 +82,56 @@ static void BlockArm_StartAutoMove(BlockArmFineAdjustProfile_t profile)
         return;
     }
 
-    block_arm.fine_adjust_profile = profile;
-    block_arm.fine_adjust_active = false;
+    switch (target)
+    {
+        case BLOCK_ARM_TARGET_LOW_PICK_READY:
+            block_arm.fine_adjust_profile = BLOCK_ARM_FINE_PROFILE_LOW_PICK;
+            /* TODO: 写入低位取块粗定位姿态对应的双电机目标。 */
+            break;
+
+        case BLOCK_ARM_TARGET_HIGH_PICK_READY:
+            block_arm.fine_adjust_profile = BLOCK_ARM_FINE_PROFILE_HIGH_PICK;
+            /* TODO: 写入高位取块粗定位姿态对应的双电机目标。 */
+            break;
+
+        case BLOCK_ARM_TARGET_PLACE_BOTTOM_READY:
+            block_arm.fine_adjust_profile = BLOCK_ARM_FINE_PROFILE_PLACE_BOTTOM;
+            /* TODO: 写入底层放块粗定位姿态对应的双电机目标。 */
+            break;
+
+        case BLOCK_ARM_TARGET_PLACE_LEVEL1_READY:
+            block_arm.fine_adjust_profile = BLOCK_ARM_FINE_PROFILE_PLACE_LEVEL1;
+            /* TODO: 写入第一层放块粗定位姿态对应的双电机目标。 */
+            break;
+
+        case BLOCK_ARM_TARGET_PLACE_LEVEL2_READY:
+            block_arm.fine_adjust_profile = BLOCK_ARM_FINE_PROFILE_PLACE_LEVEL2;
+            /* TODO: 写入第二层放块粗定位姿态对应的双电机目标。 */
+            break;
+
+        case BLOCK_ARM_TARGET_SAFE:
+            block_arm.fine_adjust_profile = BLOCK_ARM_FINE_PROFILE_NONE;
+            /* TODO: 写入安全搬运姿态对应的双电机目标。 */
+            break;
+
+        default:
+            return;
+    }
+
+    block_arm.fine_adjust_active = false; /* 自动动作不允许直接开始四方向微调 */
     block_arm.reached_count = 0U;
     block_arm.motion_count = 0U;
+    if (!Motor_SetPosition(block_arm.motor_a,
+                       block_arm.motor_a_target_position) ||
+    !Motor_SetPosition(block_arm.motor_b,
+                       block_arm.motor_b_target_position))
+    {
+    block_arm.state = BLOCK_ARM_FAULT;
+    return;
+    }
     block_arm.state = BLOCK_ARM_MOVING;
 
-    /* TODO: 写入两个电机的真实目标，并发起经过机械验证的自动运动。 */
+    /* TODO: 根据前面两个电机的目前目标位置，发起经过机械验证的自动运动。 */
 }
 
 /* 判断自动动作是否已经稳定到位。 */
@@ -102,7 +156,27 @@ static void BlockArm_ApplyFineAdjust(void)
     {
         case BLOCK_ARM_FINE_PROFILE_LOW_PICK:
             /* TODO: 实现低位取块区域的前、后、上、下双电机组合。 */
+        {
+            switch (block_arm.fine_adjust_direction)
+            {
+            case BLOCK_ARM_FINE_FORWARD:
+            /* 设置两个电机的组合速度 */
             break;
+
+            case BLOCK_ARM_FINE_BACKWARD:
+            /* 设置两个电机的组合速度 */
+            break;
+
+            case BLOCK_ARM_FINE_UP:
+            /* 设置两个电机的组合速度 */
+            break;
+
+            case BLOCK_ARM_FINE_DOWN:
+            /* 设置两个电机的组合速度 */
+            break;
+            }
+        }
+        break;
 
         case BLOCK_ARM_FINE_PROFILE_HIGH_PICK:
             /* TODO: 实现高位取块区域的前、后、上、下双电机组合。 */
@@ -199,37 +273,38 @@ void BlockArm_Stop(void)
 
 void BlockArm_MoveToLowPickReady(void)
 {
-    BlockArm_StartAutoMove(BLOCK_ARM_FINE_PROFILE_LOW_PICK);
+    BlockArm_StartAutoMove(BLOCK_ARM_TARGET_LOW_PICK_READY);
 }
 
 void BlockArm_MoveToHighPickReady(void)
 {
-    BlockArm_StartAutoMove(BLOCK_ARM_FINE_PROFILE_HIGH_PICK);
+    BlockArm_StartAutoMove(BLOCK_ARM_TARGET_HIGH_PICK_READY);
 }
 
 void BlockArm_MoveToPlaceBottomReady(void)
 {
-    BlockArm_StartAutoMove(BLOCK_ARM_FINE_PROFILE_PLACE_BOTTOM);
+    BlockArm_StartAutoMove(BLOCK_ARM_TARGET_PLACE_BOTTOM_READY);
 }
 
 void BlockArm_MoveToPlaceLevel1Ready(void)
 {
-    BlockArm_StartAutoMove(BLOCK_ARM_FINE_PROFILE_PLACE_LEVEL1);
+    BlockArm_StartAutoMove(BLOCK_ARM_TARGET_PLACE_LEVEL1_READY);
 }
 
 void BlockArm_MoveToPlaceLevel2Ready(void)
 {
-    BlockArm_StartAutoMove(BLOCK_ARM_FINE_PROFILE_PLACE_LEVEL2);
+    BlockArm_StartAutoMove(BLOCK_ARM_TARGET_PLACE_LEVEL2_READY);
 }
 
 void BlockArm_MoveToSafe(void)
 {
     /* Safe 不对应人工微调区域，完成后不允许直接开始四方向微调。 */
-    BlockArm_StartAutoMove(BLOCK_ARM_FINE_PROFILE_NONE);
+    BlockArm_StartAutoMove(BLOCK_ARM_TARGET_SAFE);
 
     /* TODO: 实现经过验证的取块/放块撤离路径与 Safe 目标。 */
 }
 
+/*开始人工微调*/
 void BlockArm_StartFineAdjust(BlockArmFineAdjustDirection_t direction)
 {
     if (direction > BLOCK_ARM_FINE_DOWN)
@@ -261,6 +336,7 @@ void BlockArm_StartFineAdjust(BlockArmFineAdjustDirection_t direction)
     BlockArm_ApplyFineAdjust();
 }
 
+/*上层停止人工微调*/
 void BlockArm_StopFineAdjust(void)
 {
     if (!block_arm.fine_adjust_active)

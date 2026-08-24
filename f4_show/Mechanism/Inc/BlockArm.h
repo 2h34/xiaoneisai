@@ -10,7 +10,7 @@ typedef enum
     BLOCK_ARM_UNHOMED,
     BLOCK_ARM_HOMING,
     BLOCK_ARM_READY,
-    BLOCK_ARM_MOVING,
+    BLOCK_ARM_MOVING, /*有两种情况：自动移动到粗定位姿态/人工微调*/
     BLOCK_ARM_REACHED,
     BLOCK_ARM_STOPPED,
     BLOCK_ARM_FAULT
