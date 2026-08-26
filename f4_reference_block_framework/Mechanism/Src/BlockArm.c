@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+/** 人工微调的间隔时间，单位为毫秒 */
 #define BLOCK_ARM_FINE_ADJUST_INTERVAL_MS 20U
 
 /* 自动粗定位动作的目标位置，只在 BlockArm 内部使用。 */
@@ -37,24 +38,24 @@ typedef struct
     float zdrive_current_position;
     float dji_target_position;
     float zdrive_target_position;
-    float dji_zero_position;
-    float zdrive_zero_position;
+    float dji_zero_position;  /** DJI 电机零点偏移 */
+    float zdrive_zero_position; /** ZDrive 电机零点偏移 */
 
     float tolerance; /* 位置误差容忍度，单位为角度。 */
-    uint16_t reached_count;
-    uint32_t homing_count;
+    uint16_t reached_count;  /* 连续到位计数器，用于判断是否真正到位。 */
+    uint32_t homing_count;  /*归零计数器，用于判断超时*/
     uint32_t motion_count; /* 记录连续运动周期数，用于判断超时。 */
 
     BlockArmFineAdjustProfile_t fine_adjust_profile;  /* 当前粗定位姿态对应的微调组合。 */
     BlockArmFineAdjustDirection_t fine_adjust_direction; /* 当前微调方向。 */
-    bool fine_adjust_active;
+    bool fine_adjust_active; /* 标记是否正在执行人工微调动作 */
 
     uint32_t fine_adjust_last_ms; /*记录上次微调的时间 */
 
     bool reset_to_safe_active; /* 标记是否正在执行复位到安全姿态的动作 */
 } BlockArm_t;
 
-static BlockArm_t block_arm;
+static BlockArm_t block_arm; /*后续考虑升级为结构体数组*/
 
 /*检查是否绑定两个正确电机*/
 static bool BlockArm_DriversBound(void)
@@ -63,7 +64,7 @@ static bool BlockArm_DriversBound(void)
            block_arm.zdrive_motor != NULL;
 }
 
-/* 读取模板驱动已经更新的输出端位置反馈。 */
+/* 读取模板驱动已经更新的输出端位置反馈（状态机周期更新）*/
 static void BlockArm_UpdateFeedback(void)
 {
     if (block_arm.dji_motor != NULL)
@@ -91,7 +92,7 @@ static void BlockArm_ApplyPositionTargets(void)
     Zdrive_SetPositionTarget(block_arm.zdrive_motor,block_arm.zdrive_target_position + block_arm.zdrive_zero_position);
 }
 
-/*设置粗固定姿态目标位置*/
+/*设置粗固定姿态目标位置（设置blockarm的目标位置）*/
 static void BlockArm_SetAutoTarget(BlockArmTarget_t target)
 {
     switch (target)
@@ -142,8 +143,13 @@ static void BlockArm_StartAutoMove(BlockArmTarget_t target)
     {
         return;
     }
+
+    /* 复位到安全姿态的动作标记清除，避免干扰后续动作。
+    每次普通自动运动先取消旧的“回 Safe 复位任务”身份；
+    只有 BlockArm_Reset() 才能重新赋予这次运动该身份。*/
     block_arm.reset_to_safe_active = false;
-    BlockArm_UpdateFeedback();
+
+    BlockArm_UpdateFeedback(); /*立刻更新当前位置，以便后续操作*/
 
     /*
      * 未填入机械标定目标前，先以当前位置作为临时保持目标。
@@ -170,6 +176,10 @@ static bool BlockArm_IsReached(void)
     return false;
 }
 
+/* 执行人工微调动作，按指定方向移动末端。
+ * 该函数在 Process() 中周期调用（只有按下按键时调用），
+ * 间隔时间由 BLOCK_ARM_FINE_ADJUST_INTERVAL_MS 决定。
+ */
 static void BlockArm_ApplyFineAdjust(void)
 {
     uint32_t now_ms = HAL_GetTick();
@@ -283,8 +293,6 @@ void BlockArm_Home(void)
     block_arm.fine_adjust_profile = BLOCK_ARM_FINE_PROFILE_NONE;
     block_arm.state = BLOCK_ARM_HOMING;
 
-
-
      DJmotor_SetZeromode(block_arm.dji_motor);
      Zdrive_SetZeromode(block_arm.zdrive_motor);
 }
@@ -324,6 +332,7 @@ void BlockArm_Stop(void)
     }
 }
 
+/*均为对外接口*/
 void BlockArm_MoveToLowPickReady(void)
 {
     BlockArm_StartAutoMove(BLOCK_ARM_TARGET_LOW_PICK_READY);
@@ -355,6 +364,7 @@ void BlockArm_MoveToSafe(void)
     /* TODO: 必要时在此目标内部扩展经过验证的撤离路径。 */
 }
 
+/* 按指定末端方向启动低速人工微调（需一直按住）*/
 void BlockArm_StartFineAdjust(BlockArmFineAdjustDirection_t direction)
 {
     if (direction > BLOCK_ARM_FINE_DOWN ||
@@ -417,9 +427,10 @@ void BlockArm_Process(void)
         case BLOCK_ARM_HOMING:
             block_arm.homing_count++;
             
+            /* 检查两个电机是否都已完成寻零 */
             if (DJmotor_IsZeroDone(block_arm.dji_motor) && Zdrive_IsZeroDone(block_arm.zdrive_motor))
             {
-                /* 记录归零位置作为后续保持目标的零点偏移。 */
+                /* 两个电机寻零完成后，记录归零位置作为后续保持目标的零点偏移。 */
                 block_arm.dji_zero_position = block_arm.dji_motor->valNow.angle_deg;
                 block_arm.zdrive_zero_position = block_arm.zdrive_motor->valReal.pos_deg;
 
@@ -437,7 +448,7 @@ void BlockArm_Process(void)
         
         case BLOCK_ARM_HOME_TO_SAFE:
             BlockArm_ApplyPositionTargets();
-            if (BlockArm_IsReached())
+            if (BlockArm_IsReached())  /*归零后移动到安全位置并上电，转换为Ready状态*/
             {
                 block_arm.state = BLOCK_ARM_READY;
             }
@@ -469,7 +480,7 @@ void BlockArm_Process(void)
 
         case BLOCK_ARM_REACHED:
         {
-            if (block_arm.reset_to_safe_active)
+            if (block_arm.reset_to_safe_active)  /* 如果是复位到安全姿态的动作，到达reached状态后转换为Ready状态 */
             {
                 block_arm.state = BLOCK_ARM_READY;
                 block_arm.fine_adjust_active = false;
@@ -483,6 +494,7 @@ void BlockArm_Process(void)
             break;
         
         case BLOCK_ARM_STOPPED:
+            /* 停止状态，不执行任何动作，电机使能保持原姿势 */
             BlockArm_ApplyPositionTargets();
             break;
 
@@ -495,7 +507,7 @@ void BlockArm_Process(void)
     }
 }
 
-
+/*一般配合BlockArm_Stop()使用，用于将机械臂复位到安全位置*/
 void BlockArm_Reset(void)
 {
     if (block_arm.state != BLOCK_ARM_STOPPED && block_arm.state != BLOCK_ARM_REACHED)

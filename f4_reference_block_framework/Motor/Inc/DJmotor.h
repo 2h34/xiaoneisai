@@ -71,7 +71,7 @@ extern "C"
 
     typedef struct
     {
-        volatile bool ZeroFlag;
+        volatile bool ZeroFlag;  /* 寻零完成标志 */
         volatile bool Overtimeflag;
         volatile bool StuckFlag;
         volatile bool IsSetZero;  /* 请求下一次反馈时重置位置”的内部标志 */
@@ -130,7 +130,7 @@ extern "C"
     /* 请求速度模式并写入输出端速度目标，可由机构层周期调用。 */
     void DJmotor_SetVelocityTarget(DJMotorPointer motor, int16_t target_velocity_rpm);
 
-    /*调用寻零模式*/
+    /*启动寻零模式*/
     void DJmotor_SetZeromode(DJMotorPointer motor);
     /* 判断寻零是否完成*/
     bool DJmotor_IsZeroDone(DJMotorPointer motor);

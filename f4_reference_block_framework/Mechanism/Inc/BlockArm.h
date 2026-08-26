@@ -49,6 +49,7 @@ void BlockArm_MoveToLowPickReady(void);
 /* 移动到双层上方大地块的取块粗定位姿态。 */
 void BlockArm_MoveToHighPickReady(void);
 
+/* 移动到放置位置的粗定位姿态。 */
 void BlockArm_MoveToPlaceBottomReady(void);
 void BlockArm_MoveToPlaceLevel1Ready(void);
 void BlockArm_MoveToPlaceLevel2Ready(void);
@@ -56,10 +57,10 @@ void BlockArm_MoveToPlaceLevel2Ready(void);
 /* 启动到安全搬运姿态的复合运动。 */
 void BlockArm_MoveToSafe(void);
 
-/* 按指定末端方向启动低速人工微调。 */
+/* 按指定末端方向启动低速人工微调（需一直按住）*/
 void BlockArm_StartFineAdjust(BlockArmFineAdjustDirection_t direction);
 
-/* 停止人工微调，并由后续实现保持当前机构姿态。 */
+/* 停止人工微调，并由后续实现保持当前机构姿态（松开按键后执行） */
 void BlockArm_StopFineAdjust(void);
 
 /* 启动回 Safe 的复位动作；到达 Safe 后由 Process() 进入 READY。 */

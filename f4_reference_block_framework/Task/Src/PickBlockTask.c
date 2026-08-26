@@ -103,7 +103,7 @@ void PickBlockTask_Process(void)
             break;
 
          case PICK_BLOCK_TASK_MANUAL_ALIGN:
-            /* 等待操作手微调并调用 PickBlockTask_ConfirmGrab()*/
+            /* 等待操作手微调并调用 PickBlockTask_ConfirmGrab() */
             break;
 
         case PICK_BLOCK_TASK_GRAB:

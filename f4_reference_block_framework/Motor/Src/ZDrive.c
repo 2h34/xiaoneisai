@@ -520,7 +520,7 @@ void ZdriveFunc(void)
             continue;
         }
 
-        if (Zmotor[i].zero.done == true)
+        if (Zmotor[i].zero.done == true)  /* 如果寻零完成 ，则电机失能（后续会进行启动到安全位置） */
         {
             Zmotor[i].mode = Zdrive_Disable;
             continue;
