@@ -25,7 +25,7 @@ extern "C"
 #define Current_Limit 40.f
 
 #define Zero_tolerance 0.5f
-#define Zero_count 10U
+#define Zero_count 20U
 #define Zero_speed -80.0f
 
 
@@ -145,8 +145,8 @@ extern "C"
 
     typedef struct
     {
-        bool active; // 正在反转归零
-        volatile bool done;   // 已确认机械堵转
+        bool active; // 是否正在反转归零
+        volatile bool done;   // 是否已经确认机械堵转
         float last_pos_deg;  // 上次归零反馈位置,用于判断是否堵转
         uint16_t still_count;  // 连续小位移反馈次数
     }  ZdriveZeroState;

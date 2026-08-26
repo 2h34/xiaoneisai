@@ -35,7 +35,7 @@ typedef enum
 void BlockArm_Init(DJMotor *dji_motor, Zdrive *zdrive_motor);
 
 /* 启动 BlockArm 的归零流程，直到两个电机都到达归零位置。
- * 归零完成后，BlockArm 进入 READY 状态。
+ * 归零完成后，BlockArm 进入HOME_TO_SAFE状态，等待移动到安全位置后，进入 READY 状态。
  * 若当前状态不允许归零，则忽略本调用。*/
 void BlockArm_Home(void);
 

@@ -543,6 +543,7 @@ void Zdrive_SetPositionTarget(Zdrive *motor, float target_position_deg)
         return;
     }
 
+    /* 归零状态清除,避免寻零模式干扰位置模式（让电机从Disable转成Position） */
     motor->zero.active = false;
     motor->zero.done = false;
 

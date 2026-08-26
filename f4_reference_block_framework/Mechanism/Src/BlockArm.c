@@ -283,7 +283,8 @@ void BlockArm_Home(void)
     block_arm.fine_adjust_profile = BLOCK_ARM_FINE_PROFILE_NONE;
     block_arm.state = BLOCK_ARM_HOMING;
 
-    /* TODO: 按真实限位方案和双电机顺序启动归零。 */
+
+
      DJmotor_SetZeromode(block_arm.dji_motor);
      Zdrive_SetZeromode(block_arm.zdrive_motor);
 }
@@ -298,7 +299,9 @@ void BlockArm_Stop(void)
             return;
         }
         block_arm.fine_adjust_active = false;
-        /*Todo：停止两个电机的归零操作*/
+        /*Todo：取消两个电机的归零输出*/
+
+
         block_arm.state = BLOCK_ARM_UNHOMED;
     }
     else if (block_arm.state == BLOCK_ARM_UNHOMED)
@@ -413,15 +416,16 @@ void BlockArm_Process(void)
 
         case BLOCK_ARM_HOMING:
             block_arm.homing_count++;
-            /* TODO: 等待两个电机归零完成后记录两个零点并进入 READY。 */
+            
             if (DJmotor_IsZeroDone(block_arm.dji_motor) && Zdrive_IsZeroDone(block_arm.zdrive_motor))
             {
                 /* 记录归零位置作为后续保持目标的零点偏移。 */
                 block_arm.dji_zero_position = block_arm.dji_motor->valNow.angle_deg;
                 block_arm.zdrive_zero_position = block_arm.zdrive_motor->valReal.pos_deg;
 
-                /*ToDo：设置两个电机目标位置为安全位置 */
-
+                /* TODO: 将电机目标位置设为安全位置。 */
+                // block_arm.dji_target_position =
+                // block_arm.zdrive_target_position =
 
                 block_arm.state = BLOCK_ARM_HOME_TO_SAFE;
             }
