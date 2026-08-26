@@ -40,18 +40,18 @@ typedef struct
     float dji_zero_position;
     float zdrive_zero_position;
 
-    float tolerance;
+    float tolerance; /* 位置误差容忍度，单位为角度。 */
     uint16_t reached_count;
     uint32_t homing_count;
-    uint32_t motion_count;
+    uint32_t motion_count; /* 记录连续运动周期数，用于判断超时。 */
 
-    BlockArmFineAdjustProfile_t fine_adjust_profile;
-    BlockArmFineAdjustDirection_t fine_adjust_direction;
+    BlockArmFineAdjustProfile_t fine_adjust_profile;  /* 当前粗定位姿态对应的微调组合。 */
+    BlockArmFineAdjustDirection_t fine_adjust_direction; /* 当前微调方向。 */
     bool fine_adjust_active;
 
     uint32_t fine_adjust_last_ms; /*记录上次微调的时间 */
 
-    bool reset_to_safe_active;
+    bool reset_to_safe_active; /* 标记是否正在执行复位到安全姿态的动作 */
 } BlockArm_t;
 
 static BlockArm_t block_arm;
@@ -69,13 +69,13 @@ static void BlockArm_UpdateFeedback(void)
     if (block_arm.dji_motor != NULL)
     {
         block_arm.dji_current_position =
-            block_arm.dji_motor->valNow.angle_deg;
+            block_arm.dji_motor->valNow.angle_deg - block_arm.dji_zero_position;
     }
 
     if (block_arm.zdrive_motor != NULL)
     {
         block_arm.zdrive_current_position =
-            block_arm.zdrive_motor->valReal.pos_deg;
+            block_arm.zdrive_motor->valReal.pos_deg - block_arm.zdrive_zero_position;
     }
 }
 
@@ -86,10 +86,9 @@ static void BlockArm_UpdateFeedback(void)
  */
 static void BlockArm_ApplyPositionTargets(void)
 {
-    DJmotor_SetPositionTarget(block_arm.dji_motor,
-                              block_arm.dji_target_position);
-    Zdrive_SetPositionTarget(block_arm.zdrive_motor,
-                             block_arm.zdrive_target_position);
+    /* 将目标位置加上零点偏移后下发给两个电机 */
+    DJmotor_SetPositionTarget(block_arm.dji_motor,block_arm.dji_target_position + block_arm.dji_zero_position);
+    Zdrive_SetPositionTarget(block_arm.zdrive_motor,block_arm.zdrive_target_position + block_arm.zdrive_zero_position);
 }
 
 /*设置粗固定姿态目标位置*/
@@ -261,7 +260,7 @@ void BlockArm_Init(DJMotor *dji_motor, Zdrive *zdrive_motor)
     block_arm.zdrive_target_position = 0.0f;
     block_arm.dji_zero_position = 0.0f;
     block_arm.zdrive_zero_position = 0.0f;
-    block_arm.tolerance = 0.0f;
+    block_arm.tolerance = 5.0f;
     block_arm.reached_count = 0U;
     block_arm.homing_count = 0U;
     block_arm.motion_count = 0U;
@@ -285,6 +284,8 @@ void BlockArm_Home(void)
     block_arm.state = BLOCK_ARM_HOMING;
 
     /* TODO: 按真实限位方案和双电机顺序启动归零。 */
+     DJmotor_SetZeromode(block_arm.dji_motor);
+     Zdrive_SetZeromode(block_arm.zdrive_motor);
 }
 
 void BlockArm_Stop(void)
@@ -297,6 +298,7 @@ void BlockArm_Stop(void)
             return;
         }
         block_arm.fine_adjust_active = false;
+        /*Todo：停止两个电机的归零操作*/
         block_arm.state = BLOCK_ARM_UNHOMED;
     }
     else if (block_arm.state == BLOCK_ARM_UNHOMED)
@@ -411,10 +413,34 @@ void BlockArm_Process(void)
 
         case BLOCK_ARM_HOMING:
             block_arm.homing_count++;
-            /* TODO: 检测归零信号，记录两个零点后进入 READY。 */
+            /* TODO: 等待两个电机归零完成后记录两个零点并进入 READY。 */
+            if (DJmotor_IsZeroDone(block_arm.dji_motor) && Zdrive_IsZeroDone(block_arm.zdrive_motor))
+            {
+                /* 记录归零位置作为后续保持目标的零点偏移。 */
+                block_arm.dji_zero_position = block_arm.dji_motor->valNow.angle_deg;
+                block_arm.zdrive_zero_position = block_arm.zdrive_motor->valReal.pos_deg;
+
+                /*ToDo：设置两个电机目标位置为安全位置 */
+
+
+                block_arm.state = BLOCK_ARM_HOME_TO_SAFE;
+            }
+            else if (block_arm.homing_count > 10000U)
+            {
+                block_arm.state = BLOCK_ARM_FAULT;
+            }
+            break;
+        
+        case BLOCK_ARM_HOME_TO_SAFE:
+            BlockArm_ApplyPositionTargets();
+            if (BlockArm_IsReached())
+            {
+                block_arm.state = BLOCK_ARM_READY;
+            }
             break;
 
         case BLOCK_ARM_READY:
+            BlockArm_ApplyPositionTargets();
             break;
 
         case BLOCK_ARM_MOVING:

@@ -125,25 +125,13 @@ void DJmotor_Init(void)
     }
 }
 
+/**重新加载PID参数*/
 void DJmotor_PID_Reload(DJMotorPointer motor, DJmotorPID pid_reload)
 {
     PID_Init(&motor->posPID, pid_reload.posPID.KP, pid_reload.posPID.KI, pid_reload.posPID.KD, pid_reload.posPID.mode);
     PID_Init(&motor->velPID, pid_reload.velPID.KP, pid_reload.velPID.KI, pid_reload.velPID.KD, pid_reload.velPID.mode);
 }
 
-void DJmotor_SetPositionTarget(DJMotorPointer motor, float target_angle_deg)
-{
-    if (motor == NULL)
-    {
-        return;
-    }
-    if(!motor->Begin)
-    {
-        motor->Begin = true;
-    }
-    motor->MODE_Set = DJ_Position;
-    motor->valSet.angle_deg = target_angle_deg;
-}
 
 void DJmotor_SetZero(DJMotorPointer motor)
 {
@@ -402,4 +390,59 @@ void DJmotor_Func(void)
         DJmotor_CurrentTransmit(&DJmotor[i]);
     }
 }
+
+/*对外接口：设置位置目标*/
+void DJmotor_SetPositionTarget(DJMotorPointer motor, float target_angle_deg)
+{
+    if (motor == NULL)
+    {
+        return;
+    }
+    if(!motor->Begin)
+    {
+        motor->Begin = true;
+    }
+    motor->MODE_Set = DJ_Position;
+    motor->valSet.angle_deg = target_angle_deg;
+}
+
+/*对外接口：设置速度目标*/
+void DJmotor_SetVelocityTarget(DJMotorPointer motor, int16_t target_velocity_rpm)
+{
+    if (motor == NULL)
+    {
+        return;
+    }
+    if(!motor->Begin)
+    {
+        motor->Begin = true;
+    }
+    motor->MODE_Set = DJ_RPM;
+    motor->valSet.speed_rpm = target_velocity_rpm;
+}
+
+
+void DJmotor_SetZeromode(DJMotorPointer motor)
+{
+    if (motor == NULL)
+    {
+        return;
+    }
+    if(!motor->Begin)
+    {
+        motor->Begin = true;
+    }
+    motor->MODE_Set = DJ_Zero;
+}
+
+bool DJmotor_IsZeroDone(DJMotorPointer motor)
+{
+    if (motor == NULL)
+    {
+        return false;
+    }
+
+    return motor->statusFlag.ZeroFlag;
+}
+
 #endif /* USE_DJ */

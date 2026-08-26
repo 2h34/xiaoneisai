@@ -24,6 +24,13 @@ extern "C"
 #define Velocity_Limit 150.f
 #define Current_Limit 40.f
 
+#define Zero_tolerance 0.5f
+#define Zero_count 10U
+#define Zero_speed -80.0f
+
+
+
+
     typedef enum
     {
         Zdrive_Disable = 0,              // 0失能
@@ -138,6 +145,14 @@ extern "C"
 
     typedef struct
     {
+        bool active; // 正在反转归零
+        volatile bool done;   // 已确认机械堵转
+        float last_pos_deg;  // 上次归零反馈位置,用于判断是否堵转
+        uint16_t still_count;  // 连续小位移反馈次数
+    }  ZdriveZeroState;
+
+    typedef struct
+    {
         volatile bool Begin; /* 初始化完成标志:false 时 Func 跳过该电机,由任务层置 true */
         ZdriveMode mode;     /* 目标模式,任务层写;Disable 即停止 */
         ZdriveMode modeRead; /* 驱动确认的当前模式,由 RX 更新 */
@@ -149,7 +164,11 @@ extern "C"
         ZdriveValue valPre;
         ZdriveParam param;
         ZdriveLimit limit;
+
+        ZdriveZeroState zero; /* 归零状态参数 */
     } Zdrive;
+
+
 
 #if USE_ZMDR
     extern Zdrive Zmotor[USE_ZDRIVE_NUM];
@@ -162,6 +181,13 @@ extern "C"
 
     /* 请求位置模式并写入输出端角度目标，可由机构层周期调用。 */
     void Zdrive_SetPositionTarget(Zdrive *motor, float target_position_deg);
+    /* 请求速度模式并写入输出端速度目标(rpm)，可由机构层周期调用。 */
+    void Zdrive_SetVelocityTarget(Zdrive *motor, int16_t target_velocity_rpm);
+
+    /* 请求启动寻零模式 */
+    void Zdrive_SetZeromode(Zdrive *motor);
+    /* 判断寻零是否完成 */
+    bool Zdrive_IsZeroDone(Zdrive *motor);
 
     void ZdriveSet(float data, uint8_t id, uint8_t set_code);
     void ZdriveAsk(uint8_t id, uint8_t ask_code);

@@ -98,7 +98,7 @@ void ZdriveInit(void)
     for (uint32_t i = 0; i < USE_ZDRIVE_NUM; i++)
     {
         Zmotor[i].param.GearRatio = 1.0f;
-        Zmotor[i].param.ReductionRatio = 1.0f;
+        Zmotor[i].param.ReductionRatio = 6.0f; /*电机/机械配置减速比，这里AK80.6*/
         Zmotor[i].param.zdrive_id = (uint8_t)(i + 1U);
         Zmotor[i].valSetPre.pos_deg = 0.f;
         Zmotor[i].valSetNow.speed_rpm = 0.0f;
@@ -115,6 +115,12 @@ void ZdriveInit(void)
         Zmotor[i].modeRead = Zdrive_Disable;
         Zmotor[i].err = Zdrive_Well; /* 上电无错误 */
         Zmotor[i].Begin = false;     /* 初始化完成后由任务层置 true */
+
+        /* 归零状态参数初始化 */
+        Zmotor[i].zero.active = false;
+        Zmotor[i].zero.done = false;
+        Zmotor[i].zero.last_pos_deg = 0.0f;
+        Zmotor[i].zero.still_count = 0U;
     }
     ZdriveAsk(0xFU, Mode); /* 读取所有电机的模式 */
     ZdriveAsk(0xFU, Pos_PID_P);
@@ -123,17 +129,6 @@ void ZdriveInit(void)
     ZdriveAsk(0xFU, Vel_PID_I);
 }
 
-void Zdrive_SetPositionTarget(Zdrive *motor, float target_position_deg)
-{
-    if (motor == NULL)
-    {
-        return;
-    }
-
-    motor->Begin = true;
-    motor->mode = Zdrive_Postion;
-    motor->valSetNow.pos_deg = target_position_deg;
-}
 
 /* 统一 set:按 set_code 完成单位换算、帧编码、读回确认后再入队。
    - 4 字节 float:绝大多数命令(PosIn/VelIn/Pur/Mode/Acc_Acu/Acc_Dec...)
@@ -221,6 +216,24 @@ void ZdriveReceive(CAN_RxHeaderTypeDef Rxheader, uint8_t *Rx_Data, uint8_t bus)
             memcpy(&Zmotor[motor_index].valReal.pos_deg, Rx_Data, sizeof(float));
             Zmotor[motor_index].valReal.pos_deg = N2DEG(Zmotor[motor_index].valReal.pos_deg) /
                                                   Zmotor[motor_index].param.ReductionRatio;
+            if (Zmotor[motor_index].zero.active)
+            {
+                if (fabsf(Zmotor[motor_index].valReal.pos_deg - Zmotor[motor_index].zero.last_pos_deg) < Zero_tolerance)
+                {
+                    Zmotor[motor_index].zero.still_count++;
+                }
+                else
+                {
+                    Zmotor[motor_index].zero.still_count = 0U;
+                }
+                Zmotor[motor_index].zero.last_pos_deg = Zmotor[motor_index].valReal.pos_deg;
+
+                if (Zmotor[motor_index].zero.still_count >= Zero_count)
+                {
+                    Zmotor[motor_index].zero.done = true;
+                    Zmotor[motor_index].zero.active = false;
+                }
+            }
             break;
         case Cur_M:
             memcpy(&Zmotor[motor_index].valReal.current_A, Rx_Data, sizeof(float));
@@ -249,6 +262,7 @@ void ZdriveReceive(CAN_RxHeaderTypeDef Rxheader, uint8_t *Rx_Data, uint8_t bus)
             memcpy(&temp_pos_in, Rx_Data, sizeof(float));
             Zmotor[motor_index].valReal.posIn_deg = N2DEG(temp_pos_in) /
                                                     Zmotor[motor_index].param.ReductionRatio;
+
             break;
         }
         case Vel_Limit:
@@ -388,7 +402,14 @@ static void Zdrive_SwitchMachine(Zdrive *motor, uint8_t id)
     case Zdrive_Current:
         break;
     case Zdrive_Speed:
-        motor->valSetNow.speed_rpm = 0.f;
+        if (motor->zero.active)
+        {
+            
+        }
+        else
+        {
+            motor->valSetNow.speed_rpm = 0.f;
+        }
         motor->valSetPre.speed_rpm = 0.f;
         break;
     case Zdrive_Postion:
@@ -499,6 +520,11 @@ void ZdriveFunc(void)
             continue;
         }
 
+        if (Zmotor[i].zero.done == true)
+        {
+            Zmotor[i].mode = Zdrive_Disable;
+            continue;
+        }
         // 运行状态机
         Zdrive_RunMachine(&Zmotor[i], Zmotor[i].param.zdrive_id);
     }
@@ -509,4 +535,63 @@ void ZdriveFunc(void)
     // ZdriveAsk(0, PosIn);
     ZdriveAsk(0, Vel);
 }
+
+void Zdrive_SetPositionTarget(Zdrive *motor, float target_position_deg)
+{
+    if (motor == NULL)
+    {
+        return;
+    }
+
+    motor->zero.active = false;
+    motor->zero.done = false;
+
+    motor->Begin = true;
+    motor->mode = Zdrive_Postion;
+    motor->valSetNow.pos_deg = target_position_deg;
+}
+
+void Zdrive_SetVelocityTarget(Zdrive *motor, int16_t target_velocity_rpm)
+{
+    if (motor == NULL)
+    {
+        return;
+    }
+
+    motor->Begin = true;
+    motor->mode = Zdrive_Speed;
+    motor->valSetNow.speed_rpm = target_velocity_rpm;
+}
+
+void Zdrive_SetZeromode(Zdrive *motor)
+{
+    if (motor == NULL)
+    {
+        return;
+    }
+
+    if (!motor->zero.active)
+    {
+        motor->zero.active = true;
+        motor->zero.done = false;
+        motor->zero.last_pos_deg = motor->valReal.pos_deg;
+        motor->zero.still_count = 0U;
+    }
+
+    motor->Begin = true;
+    motor->mode = Zdrive_Speed;
+    motor->valSetNow.speed_rpm = Zero_speed;
+
+}
+
+bool Zdrive_IsZeroDone(Zdrive *motor)
+{
+    if (motor == NULL)
+    {
+        return false;
+    }
+
+    return motor->zero.done;
+}
+
 #endif /* USE_ZMDR */
