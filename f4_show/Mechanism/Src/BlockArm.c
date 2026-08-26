@@ -117,7 +117,7 @@ static void BlockArm_StartAutoMove(BlockArmTarget_t target)
         default:
             return;
     }
-
+    /* TODO: 根据前面两个电机的目前目标位置，发起经过机械验证的自动运动。 */
     block_arm.fine_adjust_active = false; /* 自动动作不允许直接开始四方向微调 */
     block_arm.reached_count = 0U;
     block_arm.motion_count = 0U;
@@ -131,7 +131,7 @@ static void BlockArm_StartAutoMove(BlockArmTarget_t target)
     }
     block_arm.state = BLOCK_ARM_MOVING;
 
-    /* TODO: 根据前面两个电机的目前目标位置，发起经过机械验证的自动运动。 */
+    
 }
 
 /* 判断自动动作是否已经稳定到位。 */
@@ -160,19 +160,19 @@ static void BlockArm_ApplyFineAdjust(void)
             switch (block_arm.fine_adjust_direction)
             {
             case BLOCK_ARM_FINE_FORWARD:
-            /* 设置两个电机的组合速度 */
+            /* 设置两个电机的组合移动角度 */
             break;
 
             case BLOCK_ARM_FINE_BACKWARD:
-            /* 设置两个电机的组合速度 */
+            /* 设置两个电机的组合移动角度 */
             break;
 
             case BLOCK_ARM_FINE_UP:
-            /* 设置两个电机的组合速度 */
+            /* 设置两个电机的组合移动角度 */
             break;
 
             case BLOCK_ARM_FINE_DOWN:
-            /* 设置两个电机的组合速度 */
+            /* 设置两个电机的组合移动角度 */
             break;
             }
         }
