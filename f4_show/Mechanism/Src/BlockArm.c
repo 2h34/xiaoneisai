@@ -301,7 +301,7 @@ void BlockArm_MoveToSafe(void)
     /* Safe 不对应人工微调区域，完成后不允许直接开始四方向微调。 */
     BlockArm_StartAutoMove(BLOCK_ARM_TARGET_SAFE);
 
-    /* TODO: 实现经过验证的取块/放块撤离路径与 Safe 目标。 */
+    /* TODO: 实现经过验证的取块/放块撤离路径与 Safe 目标。 */ /*可以不在这里实现*/
 }
 
 /*开始人工微调*/

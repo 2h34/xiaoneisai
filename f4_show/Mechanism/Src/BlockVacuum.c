@@ -40,8 +40,8 @@ void BlockVacuum_Release(void)
     }
 
     block_vacuum.release_count = 0U;
-    block_vacuum.state = BLOCK_VACUUM_RELEASING;
-
+    block_vacuum.state = BLOCK_VACUUM_RELEASING;  
+/*后面考虑多加一个接口，确认机械臂回安全状态的时候不会碰到物块*/
     /* TODO: 向真实泵阀 Driver 发出释放真空命令。 */
 }
 

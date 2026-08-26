@@ -2299,6 +2299,124 @@ Section Cross References
     lift.o(.text.Lift_Zero) refers to lift.o(.bss.lift) for lift
     lift.o(.text.Lift_Zero) refers to motor.o(.text.Motor_SetSpeed) for Motor_SetSpeed
     lift.o(.ARM.exidx.text.Lift_Zero) refers to lift.o(.text.Lift_Zero) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_Init) refers to blockarm.o(.bss.block_arm) for block_arm
+    blockarm.o(.ARM.exidx.text.BlockArm_Init) refers to blockarm.o(.text.BlockArm_Init) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_Home) refers to blockarm.o(.bss.block_arm) for block_arm
+    blockarm.o(.ARM.exidx.text.BlockArm_Home) refers to blockarm.o(.text.BlockArm_Home) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_Stop) refers to blockarm.o(.bss.block_arm) for block_arm
+    blockarm.o(.text.BlockArm_Stop) refers to blockarm.o(.text.BlockArm_StopAndHold) for BlockArm_StopAndHold
+    blockarm.o(.ARM.exidx.text.BlockArm_Stop) refers to blockarm.o(.text.BlockArm_Stop) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_StopAndHold) refers to blockarm.o(.text.BlockArm_UpdateFeedback) for BlockArm_UpdateFeedback
+    blockarm.o(.text.BlockArm_StopAndHold) refers to blockarm.o(.bss.block_arm) for block_arm
+    blockarm.o(.ARM.exidx.text.BlockArm_StopAndHold) refers to blockarm.o(.text.BlockArm_StopAndHold) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_MoveToLowPickReady) refers to blockarm.o(.text.BlockArm_StartAutoMove) for BlockArm_StartAutoMove
+    blockarm.o(.ARM.exidx.text.BlockArm_MoveToLowPickReady) refers to blockarm.o(.text.BlockArm_MoveToLowPickReady) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_StartAutoMove) refers to blockarm.o(.bss.block_arm) for block_arm
+    blockarm.o(.text.BlockArm_StartAutoMove) refers to motor.o(.text.Motor_SetPosition) for Motor_SetPosition
+    blockarm.o(.ARM.exidx.text.BlockArm_StartAutoMove) refers to blockarm.o(.text.BlockArm_StartAutoMove) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_MoveToHighPickReady) refers to blockarm.o(.text.BlockArm_StartAutoMove) for BlockArm_StartAutoMove
+    blockarm.o(.ARM.exidx.text.BlockArm_MoveToHighPickReady) refers to blockarm.o(.text.BlockArm_MoveToHighPickReady) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_MoveToPlaceBottomReady) refers to blockarm.o(.text.BlockArm_StartAutoMove) for BlockArm_StartAutoMove
+    blockarm.o(.ARM.exidx.text.BlockArm_MoveToPlaceBottomReady) refers to blockarm.o(.text.BlockArm_MoveToPlaceBottomReady) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_MoveToPlaceLevel1Ready) refers to blockarm.o(.text.BlockArm_StartAutoMove) for BlockArm_StartAutoMove
+    blockarm.o(.ARM.exidx.text.BlockArm_MoveToPlaceLevel1Ready) refers to blockarm.o(.text.BlockArm_MoveToPlaceLevel1Ready) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_MoveToPlaceLevel2Ready) refers to blockarm.o(.text.BlockArm_StartAutoMove) for BlockArm_StartAutoMove
+    blockarm.o(.ARM.exidx.text.BlockArm_MoveToPlaceLevel2Ready) refers to blockarm.o(.text.BlockArm_MoveToPlaceLevel2Ready) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_MoveToSafe) refers to blockarm.o(.text.BlockArm_StartAutoMove) for BlockArm_StartAutoMove
+    blockarm.o(.ARM.exidx.text.BlockArm_MoveToSafe) refers to blockarm.o(.text.BlockArm_MoveToSafe) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_StartFineAdjust) refers to blockarm.o(.bss.block_arm) for block_arm
+    blockarm.o(.text.BlockArm_StartFineAdjust) refers to blockarm.o(.text.BlockArm_ApplyFineAdjust) for BlockArm_ApplyFineAdjust
+    blockarm.o(.ARM.exidx.text.BlockArm_StartFineAdjust) refers to blockarm.o(.text.BlockArm_StartFineAdjust) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_ApplyFineAdjust) refers to blockarm.o(.bss.block_arm) for block_arm
+    blockarm.o(.ARM.exidx.text.BlockArm_ApplyFineAdjust) refers to blockarm.o(.text.BlockArm_ApplyFineAdjust) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_StopFineAdjust) refers to blockarm.o(.bss.block_arm) for block_arm
+    blockarm.o(.text.BlockArm_StopFineAdjust) refers to blockarm.o(.text.BlockArm_StopAndHold) for BlockArm_StopAndHold
+    blockarm.o(.ARM.exidx.text.BlockArm_StopFineAdjust) refers to blockarm.o(.text.BlockArm_StopFineAdjust) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_GetState) refers to blockarm.o(.bss.block_arm) for block_arm
+    blockarm.o(.ARM.exidx.text.BlockArm_GetState) refers to blockarm.o(.text.BlockArm_GetState) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_Process) refers to blockarm.o(.text.BlockArm_UpdateFeedback) for BlockArm_UpdateFeedback
+    blockarm.o(.text.BlockArm_Process) refers to blockarm.o(.bss.block_arm) for block_arm
+    blockarm.o(.text.BlockArm_Process) refers to blockarm.o(.text.BlockArm_ApplyFineAdjust) for BlockArm_ApplyFineAdjust
+    blockarm.o(.text.BlockArm_Process) refers to blockarm.o(.text.BlockArm_IsReached) for BlockArm_IsReached
+    blockarm.o(.ARM.exidx.text.BlockArm_Process) refers to blockarm.o(.text.BlockArm_Process) for [Anonymous Symbol]
+    blockarm.o(.text.BlockArm_UpdateFeedback) refers to blockarm.o(.bss.block_arm) for block_arm
+    blockarm.o(.text.BlockArm_UpdateFeedback) refers to motor.o(.text.Motor_GetPosition) for Motor_GetPosition
+    blockarm.o(.ARM.exidx.text.BlockArm_UpdateFeedback) refers to blockarm.o(.text.BlockArm_UpdateFeedback) for [Anonymous Symbol]
+    blockarm.o(.ARM.exidx.text.BlockArm_IsReached) refers to blockarm.o(.text.BlockArm_IsReached) for [Anonymous Symbol]
+    blockvacuum.o(.text.BlockVacuum_Init) refers to blockvacuum.o(.bss.block_vacuum) for block_vacuum
+    blockvacuum.o(.ARM.exidx.text.BlockVacuum_Init) refers to blockvacuum.o(.text.BlockVacuum_Init) for [Anonymous Symbol]
+    blockvacuum.o(.text.BlockVacuum_Grab) refers to blockvacuum.o(.bss.block_vacuum) for block_vacuum
+    blockvacuum.o(.ARM.exidx.text.BlockVacuum_Grab) refers to blockvacuum.o(.text.BlockVacuum_Grab) for [Anonymous Symbol]
+    blockvacuum.o(.text.BlockVacuum_Release) refers to blockvacuum.o(.bss.block_vacuum) for block_vacuum
+    blockvacuum.o(.ARM.exidx.text.BlockVacuum_Release) refers to blockvacuum.o(.text.BlockVacuum_Release) for [Anonymous Symbol]
+    blockvacuum.o(.text.BlockVacuum_GetState) refers to blockvacuum.o(.bss.block_vacuum) for block_vacuum
+    blockvacuum.o(.ARM.exidx.text.BlockVacuum_GetState) refers to blockvacuum.o(.text.BlockVacuum_GetState) for [Anonymous Symbol]
+    blockvacuum.o(.text.BlockVacuum_Process) refers to blockvacuum.o(.bss.block_vacuum) for block_vacuum
+    blockvacuum.o(.ARM.exidx.text.BlockVacuum_Process) refers to blockvacuum.o(.text.BlockVacuum_Process) for [Anonymous Symbol]
+    pickblocktask.o(.text.PickBlockTask_Init) refers to pickblocktask.o(.bss.pick_block_task_state) for pick_block_task_state
+    pickblocktask.o(.ARM.exidx.text.PickBlockTask_Init) refers to pickblocktask.o(.text.PickBlockTask_Init) for [Anonymous Symbol]
+    pickblocktask.o(.text.PickBlockTask_StartLowPick) refers to pickblocktask.o(.text.PickBlockTask_CanStart) for PickBlockTask_CanStart
+    pickblocktask.o(.text.PickBlockTask_StartLowPick) refers to pickblocktask.o(.text.PickBlockTask_ArmCanStart) for PickBlockTask_ArmCanStart
+    pickblocktask.o(.text.PickBlockTask_StartLowPick) refers to blockvacuum.o(.text.BlockVacuum_GetState) for BlockVacuum_GetState
+    pickblocktask.o(.text.PickBlockTask_StartLowPick) refers to blockarm.o(.text.BlockArm_MoveToLowPickReady) for BlockArm_MoveToLowPickReady
+    pickblocktask.o(.text.PickBlockTask_StartLowPick) refers to pickblocktask.o(.bss.pick_block_task_state) for pick_block_task_state
+    pickblocktask.o(.ARM.exidx.text.PickBlockTask_StartLowPick) refers to pickblocktask.o(.text.PickBlockTask_StartLowPick) for [Anonymous Symbol]
+    pickblocktask.o(.text.PickBlockTask_CanStart) refers to pickblocktask.o(.bss.pick_block_task_state) for pick_block_task_state
+    pickblocktask.o(.ARM.exidx.text.PickBlockTask_CanStart) refers to pickblocktask.o(.text.PickBlockTask_CanStart) for [Anonymous Symbol]
+    pickblocktask.o(.text.PickBlockTask_ArmCanStart) refers to blockarm.o(.text.BlockArm_GetState) for BlockArm_GetState
+    pickblocktask.o(.ARM.exidx.text.PickBlockTask_ArmCanStart) refers to pickblocktask.o(.text.PickBlockTask_ArmCanStart) for [Anonymous Symbol]
+    pickblocktask.o(.text.PickBlockTask_StartHighPick) refers to pickblocktask.o(.text.PickBlockTask_CanStart) for PickBlockTask_CanStart
+    pickblocktask.o(.text.PickBlockTask_StartHighPick) refers to pickblocktask.o(.text.PickBlockTask_ArmCanStart) for PickBlockTask_ArmCanStart
+    pickblocktask.o(.text.PickBlockTask_StartHighPick) refers to blockvacuum.o(.text.BlockVacuum_GetState) for BlockVacuum_GetState
+    pickblocktask.o(.text.PickBlockTask_StartHighPick) refers to blockarm.o(.text.BlockArm_MoveToHighPickReady) for BlockArm_MoveToHighPickReady
+    pickblocktask.o(.text.PickBlockTask_StartHighPick) refers to pickblocktask.o(.bss.pick_block_task_state) for pick_block_task_state
+    pickblocktask.o(.ARM.exidx.text.PickBlockTask_StartHighPick) refers to pickblocktask.o(.text.PickBlockTask_StartHighPick) for [Anonymous Symbol]
+    pickblocktask.o(.text.PickBlockTask_ConfirmGrab) refers to pickblocktask.o(.bss.pick_block_task_state) for pick_block_task_state
+    pickblocktask.o(.text.PickBlockTask_ConfirmGrab) refers to blockarm.o(.text.BlockArm_StopFineAdjust) for BlockArm_StopFineAdjust
+    pickblocktask.o(.text.PickBlockTask_ConfirmGrab) refers to blockvacuum.o(.text.BlockVacuum_Grab) for BlockVacuum_Grab
+    pickblocktask.o(.ARM.exidx.text.PickBlockTask_ConfirmGrab) refers to pickblocktask.o(.text.PickBlockTask_ConfirmGrab) for [Anonymous Symbol]
+    pickblocktask.o(.text.PickBlockTask_GetState) refers to pickblocktask.o(.bss.pick_block_task_state) for pick_block_task_state
+    pickblocktask.o(.ARM.exidx.text.PickBlockTask_GetState) refers to pickblocktask.o(.text.PickBlockTask_GetState) for [Anonymous Symbol]
+    pickblocktask.o(.text.PickBlockTask_Process) refers to blockarm.o(.text.BlockArm_GetState) for BlockArm_GetState
+    pickblocktask.o(.text.PickBlockTask_Process) refers to blockvacuum.o(.text.BlockVacuum_GetState) for BlockVacuum_GetState
+    pickblocktask.o(.text.PickBlockTask_Process) refers to pickblocktask.o(.bss.pick_block_task_state) for pick_block_task_state
+    pickblocktask.o(.text.PickBlockTask_Process) refers to blockarm.o(.text.BlockArm_MoveToSafe) for BlockArm_MoveToSafe
+    pickblocktask.o(.ARM.exidx.text.PickBlockTask_Process) refers to pickblocktask.o(.text.PickBlockTask_Process) for [Anonymous Symbol]
+    placeblocktask.o(.text.PlaceBlockTask_Init) refers to placeblocktask.o(.bss.place_block_task_state) for place_block_task_state
+    placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_Init) refers to placeblocktask.o(.text.PlaceBlockTask_Init) for [Anonymous Symbol]
+    placeblocktask.o(.text.PlaceBlockTask_StartBottom) refers to placeblocktask.o(.text.PlaceBlockTask_CanStart) for PlaceBlockTask_CanStart
+    placeblocktask.o(.text.PlaceBlockTask_StartBottom) refers to placeblocktask.o(.text.PlaceBlockTask_ArmCanStart) for PlaceBlockTask_ArmCanStart
+    placeblocktask.o(.text.PlaceBlockTask_StartBottom) refers to blockvacuum.o(.text.BlockVacuum_GetState) for BlockVacuum_GetState
+    placeblocktask.o(.text.PlaceBlockTask_StartBottom) refers to blockarm.o(.text.BlockArm_MoveToPlaceBottomReady) for BlockArm_MoveToPlaceBottomReady
+    placeblocktask.o(.text.PlaceBlockTask_StartBottom) refers to placeblocktask.o(.bss.place_block_task_state) for place_block_task_state
+    placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_StartBottom) refers to placeblocktask.o(.text.PlaceBlockTask_StartBottom) for [Anonymous Symbol]
+    placeblocktask.o(.text.PlaceBlockTask_CanStart) refers to placeblocktask.o(.bss.place_block_task_state) for place_block_task_state
+    placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_CanStart) refers to placeblocktask.o(.text.PlaceBlockTask_CanStart) for [Anonymous Symbol]
+    placeblocktask.o(.text.PlaceBlockTask_ArmCanStart) refers to blockarm.o(.text.BlockArm_GetState) for BlockArm_GetState
+    placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_ArmCanStart) refers to placeblocktask.o(.text.PlaceBlockTask_ArmCanStart) for [Anonymous Symbol]
+    placeblocktask.o(.text.PlaceBlockTask_StartLevel1) refers to placeblocktask.o(.text.PlaceBlockTask_CanStart) for PlaceBlockTask_CanStart
+    placeblocktask.o(.text.PlaceBlockTask_StartLevel1) refers to placeblocktask.o(.text.PlaceBlockTask_ArmCanStart) for PlaceBlockTask_ArmCanStart
+    placeblocktask.o(.text.PlaceBlockTask_StartLevel1) refers to blockvacuum.o(.text.BlockVacuum_GetState) for BlockVacuum_GetState
+    placeblocktask.o(.text.PlaceBlockTask_StartLevel1) refers to blockarm.o(.text.BlockArm_MoveToPlaceLevel1Ready) for BlockArm_MoveToPlaceLevel1Ready
+    placeblocktask.o(.text.PlaceBlockTask_StartLevel1) refers to placeblocktask.o(.bss.place_block_task_state) for place_block_task_state
+    placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_StartLevel1) refers to placeblocktask.o(.text.PlaceBlockTask_StartLevel1) for [Anonymous Symbol]
+    placeblocktask.o(.text.PlaceBlockTask_StartLevel2) refers to placeblocktask.o(.text.PlaceBlockTask_CanStart) for PlaceBlockTask_CanStart
+    placeblocktask.o(.text.PlaceBlockTask_StartLevel2) refers to placeblocktask.o(.text.PlaceBlockTask_ArmCanStart) for PlaceBlockTask_ArmCanStart
+    placeblocktask.o(.text.PlaceBlockTask_StartLevel2) refers to blockvacuum.o(.text.BlockVacuum_GetState) for BlockVacuum_GetState
+    placeblocktask.o(.text.PlaceBlockTask_StartLevel2) refers to blockarm.o(.text.BlockArm_MoveToPlaceLevel2Ready) for BlockArm_MoveToPlaceLevel2Ready
+    placeblocktask.o(.text.PlaceBlockTask_StartLevel2) refers to placeblocktask.o(.bss.place_block_task_state) for place_block_task_state
+    placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_StartLevel2) refers to placeblocktask.o(.text.PlaceBlockTask_StartLevel2) for [Anonymous Symbol]
+    placeblocktask.o(.text.PlaceBlockTask_ConfirmRelease) refers to placeblocktask.o(.bss.place_block_task_state) for place_block_task_state
+    placeblocktask.o(.text.PlaceBlockTask_ConfirmRelease) refers to blockarm.o(.text.BlockArm_StopFineAdjust) for BlockArm_StopFineAdjust
+    placeblocktask.o(.text.PlaceBlockTask_ConfirmRelease) refers to blockvacuum.o(.text.BlockVacuum_Release) for BlockVacuum_Release
+    placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_ConfirmRelease) refers to placeblocktask.o(.text.PlaceBlockTask_ConfirmRelease) for [Anonymous Symbol]
+    placeblocktask.o(.text.PlaceBlockTask_GetState) refers to placeblocktask.o(.bss.place_block_task_state) for place_block_task_state
+    placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_GetState) refers to placeblocktask.o(.text.PlaceBlockTask_GetState) for [Anonymous Symbol]
+    placeblocktask.o(.text.PlaceBlockTask_Process) refers to blockarm.o(.text.BlockArm_GetState) for BlockArm_GetState
+    placeblocktask.o(.text.PlaceBlockTask_Process) refers to blockvacuum.o(.text.BlockVacuum_GetState) for BlockVacuum_GetState
+    placeblocktask.o(.text.PlaceBlockTask_Process) refers to placeblocktask.o(.bss.place_block_task_state) for place_block_task_state
+    placeblocktask.o(.text.PlaceBlockTask_Process) refers to blockarm.o(.text.BlockArm_MoveToSafe) for BlockArm_MoveToSafe
+    placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_Process) refers to placeblocktask.o(.text.PlaceBlockTask_Process) for [Anonymous Symbol]
     motor.o(.text.Motor_Init) refers to motor_zdrive.o(.text.Motor_ZDrive_Bind) for Motor_ZDrive_Bind
     motor.o(.text.Motor_Init) refers to motor_dji.o(.text.Motor_DJI_Bind) for Motor_DJI_Bind
     motor.o(.ARM.exidx.text.Motor_Init) refers to motor.o(.text.Motor_Init) for [Anonymous Symbol]
@@ -4146,6 +4264,94 @@ Removing Unused input sections from the image.
     Removing lift.o(.ARM.exidx.text.Lift_HaveZeroed), (8 bytes).
     Removing lift.o(.text.Lift_Zero), (52 bytes).
     Removing lift.o(.ARM.exidx.text.Lift_Zero), (8 bytes).
+    Removing blockarm.o(.text), (0 bytes).
+    Removing blockarm.o(.text.BlockArm_Init), (62 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_Init), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_Home), (60 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_Home), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_Stop), (82 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_Stop), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_StopAndHold), (24 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_StopAndHold), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_MoveToLowPickReady), (10 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_MoveToLowPickReady), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_StartAutoMove), (266 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_StartAutoMove), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_MoveToHighPickReady), (10 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_MoveToHighPickReady), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_MoveToPlaceBottomReady), (10 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_MoveToPlaceBottomReady), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_MoveToPlaceLevel1Ready), (10 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_MoveToPlaceLevel1Ready), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_MoveToPlaceLevel2Ready), (10 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_MoveToPlaceLevel2Ready), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_MoveToSafe), (10 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_MoveToSafe), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_StartFineAdjust), (148 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_StartFineAdjust), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_ApplyFineAdjust), (90 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_ApplyFineAdjust), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_StopFineAdjust), (48 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_StopFineAdjust), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_GetState), (12 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_GetState), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_Process), (148 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_Process), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_UpdateFeedback), (84 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_UpdateFeedback), (8 bytes).
+    Removing blockarm.o(.text.BlockArm_IsReached), (4 bytes).
+    Removing blockarm.o(.ARM.exidx.text.BlockArm_IsReached), (8 bytes).
+    Removing blockarm.o(.bss.block_arm), (56 bytes).
+    Removing blockvacuum.o(.text), (0 bytes).
+    Removing blockvacuum.o(.text.BlockVacuum_Init), (18 bytes).
+    Removing blockvacuum.o(.ARM.exidx.text.BlockVacuum_Init), (8 bytes).
+    Removing blockvacuum.o(.text.BlockVacuum_Grab), (36 bytes).
+    Removing blockvacuum.o(.ARM.exidx.text.BlockVacuum_Grab), (8 bytes).
+    Removing blockvacuum.o(.text.BlockVacuum_Release), (38 bytes).
+    Removing blockvacuum.o(.ARM.exidx.text.BlockVacuum_Release), (8 bytes).
+    Removing blockvacuum.o(.text.BlockVacuum_GetState), (12 bytes).
+    Removing blockvacuum.o(.ARM.exidx.text.BlockVacuum_GetState), (8 bytes).
+    Removing blockvacuum.o(.text.BlockVacuum_Process), (88 bytes).
+    Removing blockvacuum.o(.ARM.exidx.text.BlockVacuum_Process), (8 bytes).
+    Removing blockvacuum.o(.bss.block_vacuum), (12 bytes).
+    Removing pickblocktask.o(.text), (0 bytes).
+    Removing pickblocktask.o(.text.PickBlockTask_Init), (14 bytes).
+    Removing pickblocktask.o(.ARM.exidx.text.PickBlockTask_Init), (8 bytes).
+    Removing pickblocktask.o(.text.PickBlockTask_StartLowPick), (48 bytes).
+    Removing pickblocktask.o(.ARM.exidx.text.PickBlockTask_StartLowPick), (8 bytes).
+    Removing pickblocktask.o(.text.PickBlockTask_CanStart), (52 bytes).
+    Removing pickblocktask.o(.ARM.exidx.text.PickBlockTask_CanStart), (8 bytes).
+    Removing pickblocktask.o(.text.PickBlockTask_ArmCanStart), (66 bytes).
+    Removing pickblocktask.o(.ARM.exidx.text.PickBlockTask_ArmCanStart), (8 bytes).
+    Removing pickblocktask.o(.text.PickBlockTask_StartHighPick), (48 bytes).
+    Removing pickblocktask.o(.ARM.exidx.text.PickBlockTask_StartHighPick), (8 bytes).
+    Removing pickblocktask.o(.text.PickBlockTask_ConfirmGrab), (44 bytes).
+    Removing pickblocktask.o(.ARM.exidx.text.PickBlockTask_ConfirmGrab), (8 bytes).
+    Removing pickblocktask.o(.text.PickBlockTask_GetState), (12 bytes).
+    Removing pickblocktask.o(.ARM.exidx.text.PickBlockTask_GetState), (8 bytes).
+    Removing pickblocktask.o(.text.PickBlockTask_Process), (242 bytes).
+    Removing pickblocktask.o(.ARM.exidx.text.PickBlockTask_Process), (8 bytes).
+    Removing pickblocktask.o(.bss.pick_block_task_state), (1 bytes).
+    Removing placeblocktask.o(.text), (0 bytes).
+    Removing placeblocktask.o(.text.PlaceBlockTask_Init), (14 bytes).
+    Removing placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_Init), (8 bytes).
+    Removing placeblocktask.o(.text.PlaceBlockTask_StartBottom), (50 bytes).
+    Removing placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_StartBottom), (8 bytes).
+    Removing placeblocktask.o(.text.PlaceBlockTask_CanStart), (52 bytes).
+    Removing placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_CanStart), (8 bytes).
+    Removing placeblocktask.o(.text.PlaceBlockTask_ArmCanStart), (66 bytes).
+    Removing placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_ArmCanStart), (8 bytes).
+    Removing placeblocktask.o(.text.PlaceBlockTask_StartLevel1), (50 bytes).
+    Removing placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_StartLevel1), (8 bytes).
+    Removing placeblocktask.o(.text.PlaceBlockTask_StartLevel2), (50 bytes).
+    Removing placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_StartLevel2), (8 bytes).
+    Removing placeblocktask.o(.text.PlaceBlockTask_ConfirmRelease), (44 bytes).
+    Removing placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_ConfirmRelease), (8 bytes).
+    Removing placeblocktask.o(.text.PlaceBlockTask_GetState), (12 bytes).
+    Removing placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_GetState), (8 bytes).
+    Removing placeblocktask.o(.text.PlaceBlockTask_Process), (240 bytes).
+    Removing placeblocktask.o(.ARM.exidx.text.PlaceBlockTask_Process), (8 bytes).
+    Removing placeblocktask.o(.bss.place_block_task_state), (1 bytes).
     Removing motor.o(.text), (0 bytes).
     Removing motor.o(.ARM.exidx.text.Motor_Init), (8 bytes).
     Removing motor.o(.ARM.exidx.text.Motor_SetPosition), (8 bytes).
@@ -4195,7 +4401,7 @@ Removing Unused input sections from the image.
     Removing state_machine.o(.rodata..L__const.state_running.led_pins), (2 bytes).
     Removing state_machine.o(.rodata..L__const.state_alarm.led_pins), (2 bytes).
 
-1630 unused section(s) (total 122923 bytes) removed from the image.
+1718 unused section(s) (total 125697 bytes) removed from the image.
 
 ==============================================================================
 
@@ -4292,7 +4498,11 @@ Image Symbol Table
     ../mathlib/funder.c                      0x00000000   Number         0  funder.o ABSOLUTE
     ../mathlib/rredf.c                       0x00000000   Number         0  rredf.o ABSOLUTE
     ../mathlib/sinf.c                        0x00000000   Number         0  sinf.o ABSOLUTE
+    BlockArm.c                               0x00000000   Number         0  blockarm.o ABSOLUTE
+    BlockVacuum.c                            0x00000000   Number         0  blockvacuum.o ABSOLUTE
     Lift.c                                   0x00000000   Number         0  lift.o ABSOLUTE
+    PickBlockTask.c                          0x00000000   Number         0  pickblocktask.o ABSOLUTE
+    PlaceBlockTask.c                         0x00000000   Number         0  placeblocktask.o ABSOLUTE
     ZDrive.c                                 0x00000000   Number         0  zdrive.o ABSOLUTE
     beep.c                                   0x00000000   Number         0  beep.o ABSOLUTE
     byte_queue.c                             0x00000000   Number         0  byte_queue.o ABSOLUTE
@@ -5114,67 +5324,67 @@ Memory Map of the image
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x08000000   0x08000000   0x00000188   Data   RO            3    RESET               startup_stm32f405xx.o
-    0x08000188   0x08000188   0x00000008   Code   RO         2172  * !!!main             c_w.l(__main.o)
-    0x08000190   0x08000190   0x00000034   Code   RO         2426    !!!scatter          c_w.l(__scatter.o)
-    0x080001c4   0x080001c4   0x0000001a   Code   RO         2428    !!handler_copy      c_w.l(__scatter_copy.o)
+    0x08000188   0x08000188   0x00000008   Code   RO         2284  * !!!main             c_w.l(__main.o)
+    0x08000190   0x08000190   0x00000034   Code   RO         2538    !!!scatter          c_w.l(__scatter.o)
+    0x080001c4   0x080001c4   0x0000001a   Code   RO         2540    !!handler_copy      c_w.l(__scatter_copy.o)
     0x080001de   0x080001de   0x00000002   PAD
-    0x080001e0   0x080001e0   0x0000001c   Code   RO         2430    !!handler_zi        c_w.l(__scatter_zi.o)
-    0x080001fc   0x080001fc   0x00000002   Code   RO         2291    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
-    0x080001fe   0x080001fe   0x00000004   Code   RO         2300    .ARM.Collect$$libinit$$00000001  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2303    .ARM.Collect$$libinit$$00000004  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2305    .ARM.Collect$$libinit$$00000006  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2308    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2310    .ARM.Collect$$libinit$$0000000E  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2312    .ARM.Collect$$libinit$$00000010  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2315    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2317    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2319    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2321    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2323    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2325    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2327    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2329    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2331    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2333    .ARM.Collect$$libinit$$00000025  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2335    .ARM.Collect$$libinit$$00000027  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2339    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2341    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2343    .ARM.Collect$$libinit$$00000032  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000000   Code   RO         2345    .ARM.Collect$$libinit$$00000034  c_w.l(libinit2.o)
-    0x08000202   0x08000202   0x00000002   Code   RO         2346    .ARM.Collect$$libinit$$00000035  c_w.l(libinit2.o)
-    0x08000204   0x08000204   0x00000002   Code   RO         2381    .ARM.Collect$$libshutdown$$00000000  c_w.l(libshutdown.o)
-    0x08000206   0x08000206   0x00000000   Code   RO         2409    .ARM.Collect$$libshutdown$$00000002  c_w.l(libshutdown2.o)
-    0x08000206   0x08000206   0x00000000   Code   RO         2411    .ARM.Collect$$libshutdown$$00000004  c_w.l(libshutdown2.o)
-    0x08000206   0x08000206   0x00000000   Code   RO         2414    .ARM.Collect$$libshutdown$$00000007  c_w.l(libshutdown2.o)
-    0x08000206   0x08000206   0x00000000   Code   RO         2417    .ARM.Collect$$libshutdown$$0000000A  c_w.l(libshutdown2.o)
-    0x08000206   0x08000206   0x00000000   Code   RO         2419    .ARM.Collect$$libshutdown$$0000000C  c_w.l(libshutdown2.o)
-    0x08000206   0x08000206   0x00000000   Code   RO         2422    .ARM.Collect$$libshutdown$$0000000F  c_w.l(libshutdown2.o)
-    0x08000206   0x08000206   0x00000002   Code   RO         2423    .ARM.Collect$$libshutdown$$00000010  c_w.l(libshutdown2.o)
-    0x08000208   0x08000208   0x00000000   Code   RO         2208    .ARM.Collect$$rtentry$$00000000  c_w.l(__rtentry.o)
-    0x08000208   0x08000208   0x00000000   Code   RO         2252    .ARM.Collect$$rtentry$$00000002  c_w.l(__rtentry2.o)
-    0x08000208   0x08000208   0x00000006   Code   RO         2264    .ARM.Collect$$rtentry$$00000004  c_w.l(__rtentry4.o)
-    0x0800020e   0x0800020e   0x00000000   Code   RO         2254    .ARM.Collect$$rtentry$$00000009  c_w.l(__rtentry2.o)
-    0x0800020e   0x0800020e   0x00000004   Code   RO         2255    .ARM.Collect$$rtentry$$0000000A  c_w.l(__rtentry2.o)
-    0x08000212   0x08000212   0x00000000   Code   RO         2257    .ARM.Collect$$rtentry$$0000000C  c_w.l(__rtentry2.o)
-    0x08000212   0x08000212   0x00000008   Code   RO         2258    .ARM.Collect$$rtentry$$0000000D  c_w.l(__rtentry2.o)
-    0x0800021a   0x0800021a   0x00000002   Code   RO         2292    .ARM.Collect$$rtexit$$00000000  c_w.l(rtexit.o)
-    0x0800021c   0x0800021c   0x00000000   Code   RO         2352    .ARM.Collect$$rtexit$$00000002  c_w.l(rtexit2.o)
-    0x0800021c   0x0800021c   0x00000004   Code   RO         2353    .ARM.Collect$$rtexit$$00000003  c_w.l(rtexit2.o)
-    0x08000220   0x08000220   0x00000006   Code   RO         2354    .ARM.Collect$$rtexit$$00000004  c_w.l(rtexit2.o)
+    0x080001e0   0x080001e0   0x0000001c   Code   RO         2542    !!handler_zi        c_w.l(__scatter_zi.o)
+    0x080001fc   0x080001fc   0x00000002   Code   RO         2403    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
+    0x080001fe   0x080001fe   0x00000004   Code   RO         2412    .ARM.Collect$$libinit$$00000001  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2415    .ARM.Collect$$libinit$$00000004  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2417    .ARM.Collect$$libinit$$00000006  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2420    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2422    .ARM.Collect$$libinit$$0000000E  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2424    .ARM.Collect$$libinit$$00000010  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2427    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2429    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2431    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2433    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2435    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2437    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2439    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2441    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2443    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2445    .ARM.Collect$$libinit$$00000025  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2447    .ARM.Collect$$libinit$$00000027  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2451    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2453    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2455    .ARM.Collect$$libinit$$00000032  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000000   Code   RO         2457    .ARM.Collect$$libinit$$00000034  c_w.l(libinit2.o)
+    0x08000202   0x08000202   0x00000002   Code   RO         2458    .ARM.Collect$$libinit$$00000035  c_w.l(libinit2.o)
+    0x08000204   0x08000204   0x00000002   Code   RO         2493    .ARM.Collect$$libshutdown$$00000000  c_w.l(libshutdown.o)
+    0x08000206   0x08000206   0x00000000   Code   RO         2521    .ARM.Collect$$libshutdown$$00000002  c_w.l(libshutdown2.o)
+    0x08000206   0x08000206   0x00000000   Code   RO         2523    .ARM.Collect$$libshutdown$$00000004  c_w.l(libshutdown2.o)
+    0x08000206   0x08000206   0x00000000   Code   RO         2526    .ARM.Collect$$libshutdown$$00000007  c_w.l(libshutdown2.o)
+    0x08000206   0x08000206   0x00000000   Code   RO         2529    .ARM.Collect$$libshutdown$$0000000A  c_w.l(libshutdown2.o)
+    0x08000206   0x08000206   0x00000000   Code   RO         2531    .ARM.Collect$$libshutdown$$0000000C  c_w.l(libshutdown2.o)
+    0x08000206   0x08000206   0x00000000   Code   RO         2534    .ARM.Collect$$libshutdown$$0000000F  c_w.l(libshutdown2.o)
+    0x08000206   0x08000206   0x00000002   Code   RO         2535    .ARM.Collect$$libshutdown$$00000010  c_w.l(libshutdown2.o)
+    0x08000208   0x08000208   0x00000000   Code   RO         2320    .ARM.Collect$$rtentry$$00000000  c_w.l(__rtentry.o)
+    0x08000208   0x08000208   0x00000000   Code   RO         2364    .ARM.Collect$$rtentry$$00000002  c_w.l(__rtentry2.o)
+    0x08000208   0x08000208   0x00000006   Code   RO         2376    .ARM.Collect$$rtentry$$00000004  c_w.l(__rtentry4.o)
+    0x0800020e   0x0800020e   0x00000000   Code   RO         2366    .ARM.Collect$$rtentry$$00000009  c_w.l(__rtentry2.o)
+    0x0800020e   0x0800020e   0x00000004   Code   RO         2367    .ARM.Collect$$rtentry$$0000000A  c_w.l(__rtentry2.o)
+    0x08000212   0x08000212   0x00000000   Code   RO         2369    .ARM.Collect$$rtentry$$0000000C  c_w.l(__rtentry2.o)
+    0x08000212   0x08000212   0x00000008   Code   RO         2370    .ARM.Collect$$rtentry$$0000000D  c_w.l(__rtentry2.o)
+    0x0800021a   0x0800021a   0x00000002   Code   RO         2404    .ARM.Collect$$rtexit$$00000000  c_w.l(rtexit.o)
+    0x0800021c   0x0800021c   0x00000000   Code   RO         2464    .ARM.Collect$$rtexit$$00000002  c_w.l(rtexit2.o)
+    0x0800021c   0x0800021c   0x00000004   Code   RO         2465    .ARM.Collect$$rtexit$$00000003  c_w.l(rtexit2.o)
+    0x08000220   0x08000220   0x00000006   Code   RO         2466    .ARM.Collect$$rtexit$$00000004  c_w.l(rtexit2.o)
     0x08000226   0x08000226   0x00000002   PAD
     0x08000228   0x08000228   0x00000040   Code   RO            4    .text               startup_stm32f405xx.o
-    0x08000268   0x08000268   0x000000f0   Code   RO         2158    .text               c_w.l(lludivv7m.o)
-    0x08000358   0x08000358   0x0000008a   Code   RO         2160    .text               c_w.l(rt_memcpy_v6.o)
-    0x080003e2   0x080003e2   0x0000004e   Code   RO         2168    .text               c_w.l(rt_memclr_w.o)
-    0x08000430   0x08000430   0x00000006   Code   RO         2170    .text               c_w.l(heapauxi.o)
-    0x08000436   0x08000436   0x00000064   Code   RO         2215    .text               c_w.l(rt_memcpy_w.o)
+    0x08000268   0x08000268   0x000000f0   Code   RO         2270    .text               c_w.l(lludivv7m.o)
+    0x08000358   0x08000358   0x0000008a   Code   RO         2272    .text               c_w.l(rt_memcpy_v6.o)
+    0x080003e2   0x080003e2   0x0000004e   Code   RO         2280    .text               c_w.l(rt_memclr_w.o)
+    0x08000430   0x08000430   0x00000006   Code   RO         2282    .text               c_w.l(heapauxi.o)
+    0x08000436   0x08000436   0x00000064   Code   RO         2327    .text               c_w.l(rt_memcpy_w.o)
     0x0800049a   0x0800049a   0x00000002   PAD
-    0x0800049c   0x0800049c   0x00000008   Code   RO         2275    .text               c_w.l(libspace.o)
-    0x080004a4   0x080004a4   0x0000004a   Code   RO         2278    .text               c_w.l(sys_stackheap_outer.o)
-    0x080004ee   0x080004ee   0x00000012   Code   RO         2280    .text               c_w.l(exit.o)
-    0x08000500   0x08000500   0x0000000c   Code   RO         2347    .text               c_w.l(sys_exit.o)
-    0x0800050c   0x0800050c   0x00000002   Code   RO         2370    .text               c_w.l(use_no_semi.o)
-    0x0800050e   0x0800050e   0x00000000   Code   RO         2372    .text               c_w.l(indicate_semi.o)
+    0x0800049c   0x0800049c   0x00000008   Code   RO         2387    .text               c_w.l(libspace.o)
+    0x080004a4   0x080004a4   0x0000004a   Code   RO         2390    .text               c_w.l(sys_stackheap_outer.o)
+    0x080004ee   0x080004ee   0x00000012   Code   RO         2392    .text               c_w.l(exit.o)
+    0x08000500   0x08000500   0x0000000c   Code   RO         2459    .text               c_w.l(sys_exit.o)
+    0x0800050c   0x0800050c   0x00000002   Code   RO         2482    .text               c_w.l(use_no_semi.o)
+    0x0800050e   0x0800050e   0x00000000   Code   RO         2484    .text               c_w.l(indicate_semi.o)
     0x0800050e   0x0800050e   0x00000002   PAD
     0x08000510   0x08000510   0x00000004   Code   RO          118    .text.BusFault_Handler  stm32f4xx_it.o
     0x08000514   0x08000514   0x00000010   Code   RO          124    .text.CAN1_RX0_IRQHandler  stm32f4xx_it.o
@@ -5323,33 +5533,33 @@ Memory Map of the image
     0x080048c6   0x080048c6   0x00000002   PAD
     0x080048c8   0x080048c8   0x00000040   Code   RO           96    .text.MX_USART1_UART_Init  usart.o
     0x08004908   0x08004908   0x00000004   Code   RO          116    .text.MemManage_Handler  stm32f4xx_it.o
-    0x0800490c   0x0800490c   0x0000003a   Code   RO         2081    .text.Motor_DJI_Bind  motor_dji.o
+    0x0800490c   0x0800490c   0x0000003a   Code   RO         2193    .text.Motor_DJI_Bind  motor_dji.o
     0x08004946   0x08004946   0x00000002   PAD
-    0x08004948   0x08004948   0x00000026   Code   RO         2091    .text.Motor_DJI_Disable  motor_dji.o
+    0x08004948   0x08004948   0x00000026   Code   RO         2203    .text.Motor_DJI_Disable  motor_dji.o
     0x0800496e   0x0800496e   0x00000002   PAD
-    0x08004970   0x08004970   0x00000036   Code   RO         2087    .text.Motor_DJI_GetPosition  motor_dji.o
+    0x08004970   0x08004970   0x00000036   Code   RO         2199    .text.Motor_DJI_GetPosition  motor_dji.o
     0x080049a6   0x080049a6   0x00000002   PAD
-    0x080049a8   0x080049a8   0x0000002c   Code   RO         2089    .text.Motor_DJI_GetSpeed  motor_dji.o
-    0x080049d4   0x080049d4   0x00000056   Code   RO         2083    .text.Motor_DJI_SetPosition  motor_dji.o
+    0x080049a8   0x080049a8   0x0000002c   Code   RO         2201    .text.Motor_DJI_GetSpeed  motor_dji.o
+    0x080049d4   0x080049d4   0x00000056   Code   RO         2195    .text.Motor_DJI_SetPosition  motor_dji.o
     0x08004a2a   0x08004a2a   0x00000002   PAD
-    0x08004a2c   0x08004a2c   0x00000046   Code   RO         2085    .text.Motor_DJI_SetSpeed  motor_dji.o
+    0x08004a2c   0x08004a2c   0x00000046   Code   RO         2197    .text.Motor_DJI_SetSpeed  motor_dji.o
     0x08004a72   0x08004a72   0x00000002   PAD
-    0x08004a74   0x08004a74   0x00000036   Code   RO         2068    .text.Motor_GetPosition  motor.o
+    0x08004a74   0x08004a74   0x00000036   Code   RO         2180    .text.Motor_GetPosition  motor.o
     0x08004aaa   0x08004aaa   0x00000002   PAD
-    0x08004aac   0x08004aac   0x0000009a   Code   RO         2062    .text.Motor_Init    motor.o
+    0x08004aac   0x08004aac   0x0000009a   Code   RO         2174    .text.Motor_Init    motor.o
     0x08004b46   0x08004b46   0x00000002   PAD
-    0x08004b48   0x08004b48   0x00000042   Code   RO         2064    .text.Motor_SetPosition  motor.o
+    0x08004b48   0x08004b48   0x00000042   Code   RO         2176    .text.Motor_SetPosition  motor.o
     0x08004b8a   0x08004b8a   0x00000002   PAD
-    0x08004b8c   0x08004b8c   0x0000004a   Code   RO         2101    .text.Motor_ZDrive_Bind  motor_zdrive.o
+    0x08004b8c   0x08004b8c   0x0000004a   Code   RO         2213    .text.Motor_ZDrive_Bind  motor_zdrive.o
     0x08004bd6   0x08004bd6   0x00000002   PAD
-    0x08004bd8   0x08004bd8   0x0000001c   Code   RO         2111    .text.Motor_ZDrive_Disable  motor_zdrive.o
-    0x08004bf4   0x08004bf4   0x00000012   Code   RO         2107    .text.Motor_ZDrive_GetPosition  motor_zdrive.o
+    0x08004bd8   0x08004bd8   0x0000001c   Code   RO         2223    .text.Motor_ZDrive_Disable  motor_zdrive.o
+    0x08004bf4   0x08004bf4   0x00000012   Code   RO         2219    .text.Motor_ZDrive_GetPosition  motor_zdrive.o
     0x08004c06   0x08004c06   0x00000002   PAD
-    0x08004c08   0x08004c08   0x00000012   Code   RO         2109    .text.Motor_ZDrive_GetSpeed  motor_zdrive.o
+    0x08004c08   0x08004c08   0x00000012   Code   RO         2221    .text.Motor_ZDrive_GetSpeed  motor_zdrive.o
     0x08004c1a   0x08004c1a   0x00000002   PAD
-    0x08004c1c   0x08004c1c   0x0000001e   Code   RO         2103    .text.Motor_ZDrive_SetPosition  motor_zdrive.o
+    0x08004c1c   0x08004c1c   0x0000001e   Code   RO         2215    .text.Motor_ZDrive_SetPosition  motor_zdrive.o
     0x08004c3a   0x08004c3a   0x00000002   PAD
-    0x08004c3c   0x08004c3c   0x0000001e   Code   RO         2105    .text.Motor_ZDrive_SetSpeed  motor_zdrive.o
+    0x08004c3c   0x08004c3c   0x0000001e   Code   RO         2217    .text.Motor_ZDrive_SetSpeed  motor_zdrive.o
     0x08004c5a   0x08004c5a   0x00000002   PAD
     0x08004c5c   0x08004c5c   0x00000004   Code   RO          112    .text.NMI_Handler   stm32f4xx_it.o
     0x08004c60   0x08004c60   0x0000006c   Code   RO          866    .text.NVIC_EncodePriority  stm32f4xx_hal_cortex.o
@@ -5436,33 +5646,33 @@ Memory Map of the image
     0x08006a9c   0x08006a9c   0x0000003c   Code   RO         2005    .text.xPortSysTickHandler  port.o
     0x08006ad8   0x08006ad8   0x00000038   Code   RO         1643    .text.xTaskGetSchedulerState  tasks.o
     0x08006b10   0x08006b10   0x000001c4   Code   RO         1597    .text.xTaskIncrementTick  tasks.o
-    0x08006cd4   0x08006cd4   0x00000062   Code   RO         2174    x$fpl$d2f           fz_wm.l(d2f.o)
-    0x08006d36   0x08006d36   0x00000018   Code   RO         2273    x$fpl$dcmpinf       fz_wm.l(dcmpi.o)
+    0x08006cd4   0x08006cd4   0x00000062   Code   RO         2286    x$fpl$d2f           fz_wm.l(d2f.o)
+    0x08006d36   0x08006d36   0x00000018   Code   RO         2385    x$fpl$dcmpinf       fz_wm.l(dcmpi.o)
     0x08006d4e   0x08006d4e   0x00000002   PAD
-    0x08006d50   0x08006d50   0x000002b4   Code   RO         2185    x$fpl$ddiv          fz_wm.l(ddiv.o)
-    0x08007004   0x08007004   0x00000078   Code   RO         2217    x$fpl$deqf          fz_wm.l(deqf.o)
-    0x0800707c   0x0800707c   0x0000002e   Code   RO         2193    x$fpl$dflt          fz_wm.l(dflt_clz.o)
-    0x080070aa   0x080070aa   0x00000026   Code   RO         2192    x$fpl$dfltu         fz_wm.l(dflt_clz.o)
-    0x080070d0   0x080070d0   0x00000078   Code   RO         2219    x$fpl$dgeqf         fz_wm.l(dgeqf.o)
-    0x08007148   0x08007148   0x00000078   Code   RO         2221    x$fpl$dleqf         fz_wm.l(dleqf.o)
-    0x080071c0   0x080071c0   0x00000154   Code   RO         2198    x$fpl$dmul          fz_wm.l(dmul.o)
-    0x08007314   0x08007314   0x0000009c   Code   RO         2223    x$fpl$dnaninf       fz_wm.l(dnaninf.o)
-    0x080073b0   0x080073b0   0x0000000c   Code   RO         2225    x$fpl$dretinf       fz_wm.l(dretinf.o)
-    0x080073bc   0x080073bc   0x00000056   Code   RO         2200    x$fpl$f2d           fz_wm.l(f2d.o)
-    0x08007412   0x08007412   0x00000054   Code   RO         2182    x$fpl$fcmp          fz_wm.l(dcmp.o)
-    0x08007466   0x08007466   0x0000008c   Code   RO         2227    x$fpl$fnaninf       fz_wm.l(fnaninf.o)
-    0x080074f2   0x080074f2   0x0000001a   Code   RO         2364    x$fpl$fpinit        fz_wm.l(fpinit.o)
-    0x0800750c   0x0800750c   0x0000000a   Code   RO         2229    x$fpl$fretinf       fz_wm.l(fretinf.o)
-    0x08007516   0x08007516   0x00000000   Code   RO         2231    x$fpl$usenofp       fz_wm.l(usenofp.o)
+    0x08006d50   0x08006d50   0x000002b4   Code   RO         2297    x$fpl$ddiv          fz_wm.l(ddiv.o)
+    0x08007004   0x08007004   0x00000078   Code   RO         2329    x$fpl$deqf          fz_wm.l(deqf.o)
+    0x0800707c   0x0800707c   0x0000002e   Code   RO         2305    x$fpl$dflt          fz_wm.l(dflt_clz.o)
+    0x080070aa   0x080070aa   0x00000026   Code   RO         2304    x$fpl$dfltu         fz_wm.l(dflt_clz.o)
+    0x080070d0   0x080070d0   0x00000078   Code   RO         2331    x$fpl$dgeqf         fz_wm.l(dgeqf.o)
+    0x08007148   0x08007148   0x00000078   Code   RO         2333    x$fpl$dleqf         fz_wm.l(dleqf.o)
+    0x080071c0   0x080071c0   0x00000154   Code   RO         2310    x$fpl$dmul          fz_wm.l(dmul.o)
+    0x08007314   0x08007314   0x0000009c   Code   RO         2335    x$fpl$dnaninf       fz_wm.l(dnaninf.o)
+    0x080073b0   0x080073b0   0x0000000c   Code   RO         2337    x$fpl$dretinf       fz_wm.l(dretinf.o)
+    0x080073bc   0x080073bc   0x00000056   Code   RO         2312    x$fpl$f2d           fz_wm.l(f2d.o)
+    0x08007412   0x08007412   0x00000054   Code   RO         2294    x$fpl$fcmp          fz_wm.l(dcmp.o)
+    0x08007466   0x08007466   0x0000008c   Code   RO         2339    x$fpl$fnaninf       fz_wm.l(fnaninf.o)
+    0x080074f2   0x080074f2   0x0000001a   Code   RO         2476    x$fpl$fpinit        fz_wm.l(fpinit.o)
+    0x0800750c   0x0800750c   0x0000000a   Code   RO         2341    x$fpl$fretinf       fz_wm.l(fretinf.o)
+    0x08007516   0x08007516   0x00000000   Code   RO         2343    x$fpl$usenofp       fz_wm.l(usenofp.o)
     0x08007516   0x08007516   0x00000010   Data   RO         1158    .rodata.AHBPrescTable  system_stm32f4xx.o
     0x08007526   0x08007526   0x00000008   Data   RO         1159    .rodata.APBPrescTable  system_stm32f4xx.o
     0x0800752e   0x0800752e   0x00000008   Data   RO          788    .rodata.DMA_CalcBaseAndBitshift.flagBitshiftOffset  stm32f4xx_hal_dma.o
     0x08007536   0x08007536   0x00000002   PAD
-    0x08007538   0x08007538   0x00000014   Data   RO         2093    .rodata.dji_ops     motor_dji.o
+    0x08007538   0x08007538   0x00000014   Data   RO         2205    .rodata.dji_ops     motor_dji.o
     0x0800754c   0x0800754c   0x00000001   Data   RO         1295    .rodata.s_empty_data  zdrive.o
     0x0800754d   0x0800754d   0x00000003   PAD
-    0x08007550   0x08007550   0x00000014   Data   RO         2113    .rodata.zdrive_ops  motor_zdrive.o
-    0x08007564   0x08007564   0x00000020   Data   RO         2425    Region$$Table       anon$$obj.o
+    0x08007550   0x08007550   0x00000014   Data   RO         2225    .rodata.zdrive_ops  motor_zdrive.o
+    0x08007564   0x08007564   0x00000020   Data   RO         2537    Region$$Table       anon$$obj.o
 
 
     Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08007588, Size: 0x00001ac0, Max: 0x0001c000, ABSOLUTE)
@@ -5474,7 +5684,7 @@ Memory Map of the image
     0x20000005   0x0800758d   0x00000003   PAD
     0x20000008   0x08007590   0x00000004   Data   RW          987    .data.uwTickPrio    stm32f4xx_hal.o
     0x2000000c   0x08007594   0x00000004   PAD
-    0x20000010        -       0x00000060   Zero   RW         2276    .bss                c_w.l(libspace.o)
+    0x20000010        -       0x00000060   Zero   RW         2388    .bss                c_w.l(libspace.o)
     0x20000070        -       0x00000340   Zero   RW         1294    .bss.Zmotor         zdrive.o
     0x200003b0        -       0x00000008   Zero   RW         1336    .bss.can_rx_data    can_app.o
     0x200003b8        -       0x0000001c   Zero   RW         1335    .bss.can_rx_header  can_app.o
@@ -5524,42 +5734,42 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       262          0          0          0         40       5894   can.o
-       302          0          0          0         36       4199   can_app.o
-        30          0          0          0          0      34882   cmsis_os2.o
-      1180         48          0          0        992       6413   dji_motor.o
-        82          0          0          0          0       3239   dma.o
-       220          0          0          0          0       3909   gpio.o
-       518         10          0          0         28       2911   lift.o
-       130          0          0          0          0       2215   list.o
-       384          0          0          0         12       6345   main.o
-       274          0          0          0          0       2037   motor.o
-       350          0         20          0          0       3384   motor_dji.o
-       198          4         20          0          0       2252   motor_zdrive.o
-       156          0          0          0          0       2481   pid.o
-       196          8          0          0          0       3827   port.o
+       262          0          0          0         40       5890   can.o
+       302          0          0          0         36       4195   can_app.o
+        30          0          0          0          0      34878   cmsis_os2.o
+      1180         48          0          0        992       6409   dji_motor.o
+        82          0          0          0          0       3235   dma.o
+       220          0          0          0          0       3905   gpio.o
+       518         10          0          0         28       2907   lift.o
+       130          0          0          0          0       2211   list.o
+       384          0          0          0         12       6341   main.o
+       274          0          0          0          0       2033   motor.o
+       350          0         20          0          0       3380   motor_dji.o
+       198          4         20          0          0       2248   motor_zdrive.o
+       156          0          0          0          0       2477   pid.o
+       196          8          0          0          0       3823   port.o
         64         26        392          0       3072        836   startup_stm32f405xx.o
-        92          0          0          5          4       7059   stm32f4xx_hal.o
-      3090          0          0          0          0      11489   stm32f4xx_hal_can.o
-       384          0          0          0          0       9639   stm32f4xx_hal_cortex.o
-      2068          8          8          0          0       8468   stm32f4xx_hal_dma.o
-      1062          0          0          0          0       5096   stm32f4xx_hal_gpio.o
-        88          0          0          0          0       3304   stm32f4xx_hal_msp.o
-      2730          0          0          0          0       7593   stm32f4xx_hal_rcc.o
-      3918         14          0          0          0      35833   stm32f4xx_hal_tim.o
-       306          0          0          0          0      15259   stm32f4xx_hal_tim_ex.o
-       218          0          0          0         72       6991   stm32f4xx_hal_timebase_tim.o
-      3304          0          0          0          0      20314   stm32f4xx_hal_uart.o
-       146          0          0          0          0       1700   stm32f4xx_it.o
-        18          0         24          4          0       2507   system_stm32f4xx.o
-       776          0          0          0       1164      24076   tasks.o
-       648          0          0          0        144       8178   tim.o
-       130          0          0          0         67       3807   uart_app.o
-       448          0          0          0        264       6874   usart.o
-      2678        142          1          0        832       8860   zdrive.o
+        92          0          0          5          4       7055   stm32f4xx_hal.o
+      3090          0          0          0          0      11485   stm32f4xx_hal_can.o
+       384          0          0          0          0       9635   stm32f4xx_hal_cortex.o
+      2068          8          8          0          0       8464   stm32f4xx_hal_dma.o
+      1062          0          0          0          0       5092   stm32f4xx_hal_gpio.o
+        88          0          0          0          0       3300   stm32f4xx_hal_msp.o
+      2730          0          0          0          0       7589   stm32f4xx_hal_rcc.o
+      3918         14          0          0          0      35829   stm32f4xx_hal_tim.o
+       306          0          0          0          0      15255   stm32f4xx_hal_tim_ex.o
+       218          0          0          0         72       6987   stm32f4xx_hal_timebase_tim.o
+      3304          0          0          0          0      20310   stm32f4xx_hal_uart.o
+       146          0          0          0          0       1696   stm32f4xx_it.o
+        18          0         24          4          0       2503   system_stm32f4xx.o
+       776          0          0          0       1164      24072   tasks.o
+       648          0          0          0        144       8174   tim.o
+       130          0          0          0         67       3803   uart_app.o
+       448          0          0          0        264       6870   usart.o
+      2678        142          1          0        832       8856   zdrive.o
 
     ----------------------------------------------------------------------
-     26628        272        502         12       6740     271871   Object Totals
+     26628        272        502         12       6740     271743   Object Totals
          0          0         32          0          0          0   (incl. Generated)
        178         12          5          3         13          0   (incl. Padding)
 
@@ -5629,8 +5839,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     29582        468        502         12       6836     272619   Grand Totals
-     29582        468        502         12       6836     272619   ELF Image Totals
+     29582        468        502         12       6836     272491   Grand Totals
+     29582        468        502         12       6836     272491   ELF Image Totals
      29582        468        502         12          0          0   ROM Totals
 
 ==============================================================================
