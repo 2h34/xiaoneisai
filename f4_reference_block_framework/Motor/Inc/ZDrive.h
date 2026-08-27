@@ -26,9 +26,9 @@ extern "C"
 
 #define Zero_tolerance 0.5f
 #define Zero_count 20U
-#define Zero_speed -80.0f
+#define Zero_speed -40.0f  /*确认方向*/
 
-
+#define BLOCK_ARM_ZDRIVE_INDEX       0U
 
 
     typedef enum

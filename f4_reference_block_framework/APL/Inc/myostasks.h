@@ -8,4 +8,7 @@
 
 extern uint8_t BeepAlarmTimes;
 
+/* 单机械臂的机构服务任务，周期推进状态机。 */
+void BlockArmServiceTask(void *argument);
+
 #endif // __MYOSTASKS_H

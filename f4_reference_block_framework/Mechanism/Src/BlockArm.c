@@ -2,9 +2,13 @@
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <math.h>
 
 /** 人工微调的间隔时间，单位为毫秒 */
 #define BLOCK_ARM_FINE_ADJUST_INTERVAL_MS 20U
+
+/** 连续到位计数器的阈值 */
+#define BLOCK_ARM_REACHED_COUNT 10U
 
 /* 自动粗定位动作的目标位置，只在 BlockArm 内部使用。 */
 typedef enum
@@ -168,11 +172,23 @@ static void BlockArm_StartAutoMove(BlockArmTarget_t target)
 static bool BlockArm_IsReached(void)
 {
     /*
-     * TODO:
      * 1. 比较 DJI / ZDrive 反馈与本次目标；
      * 2. 连续满足误差范围后返回 true；
      * 3. 不允许只根据一次采样判定到位。
      */
+    if (fabsf(block_arm.dji_current_position - block_arm.dji_target_position) < block_arm.tolerance &&
+        fabsf(block_arm.zdrive_current_position - block_arm.zdrive_target_position) < block_arm.tolerance)
+    {
+        block_arm.reached_count++;
+        if (block_arm.reached_count >= BLOCK_ARM_REACHED_COUNT)
+        {
+            return true;
+        }
+    }
+    else
+    {
+        block_arm.reached_count = 0U;
+    }
     return false;
 }
 
@@ -270,7 +286,7 @@ void BlockArm_Init(DJMotor *dji_motor, Zdrive *zdrive_motor)
     block_arm.zdrive_target_position = 0.0f;
     block_arm.dji_zero_position = 0.0f;
     block_arm.zdrive_zero_position = 0.0f;
-    block_arm.tolerance = 5.0f;
+    block_arm.tolerance = 1.0f;
     block_arm.reached_count = 0U;
     block_arm.homing_count = 0U;
     block_arm.motion_count = 0U;
@@ -289,6 +305,7 @@ void BlockArm_Home(void)
     }
 
     block_arm.homing_count = 0U;
+    block_arm.reached_count = 0U;
     block_arm.fine_adjust_active = false;
     block_arm.fine_adjust_profile = BLOCK_ARM_FINE_PROFILE_NONE;
     block_arm.state = BLOCK_ARM_HOMING;
@@ -306,10 +323,8 @@ void BlockArm_Stop(void)
         {
             return;
         }
+        BlockArm_ApplyPositionTargets();  /*暂停归零并使能保持原位置*/
         block_arm.fine_adjust_active = false;
-        /*Todo：取消两个电机的归零输出*/
-
-
         block_arm.state = BLOCK_ARM_UNHOMED;
     }
     else if (block_arm.state == BLOCK_ARM_UNHOMED)

@@ -34,6 +34,11 @@
 #include "UART_IRQHandler.h"
 #include "Solenoid.h"
 
+#include "BlockArm.h"
+#include "BlockVacuum.h"
+#include "PickBlockTask.h"
+#include "PlaceBlockTask.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -116,6 +121,14 @@ int main(void)
   #if USE_ZMDR
   ZdriveInit();
   #endif
+
+  /* 机构层 */
+  BlockArm_Init(&DJmotor[BLOCK_ARM_DJI_INDEX], &Zmotor[BLOCK_ARM_ZDRIVE_INDEX]);
+  BlockVacuum_Init();
+
+/* 任务层 */
+  PickBlockTask_Init();
+  PlaceBlockTask_Init();
   /* USER CODE END 2 */
 
   /* Init scheduler */

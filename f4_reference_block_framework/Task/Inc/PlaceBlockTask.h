@@ -11,7 +11,9 @@ typedef enum
     PLACE_BLOCK_TASK_MOVE_TO_SAFE,
 
     PLACE_BLOCK_TASK_DONE,
-    PLACE_BLOCK_TASK_FAULT
+    PLACE_BLOCK_TASK_FAULT,
+    PLACE_BLOCK_TASK_ABORTED,
+    PLACE_BLOCK_TASK_RESET_TO_SAFE
 } PlaceBlockTaskState_t;
 
 /* 初始化放置 Task 自身状态，不重复初始化 Mechanism。 */
@@ -28,6 +30,12 @@ void PlaceBlockTask_StartLevel2(void);
 
 /* 操作手确认方块已有下方支撑，允许 Task 释放真空。 */
 void PlaceBlockTask_ConfirmRelease(void);
+    
+/*操作手发现异常状况，用于停止当前的放置任务*/
+void PlaceBlockTask_Stop(void);
+
+/*重置任务状态为 IDLE并复位机械臂，允许重新启动该任务。*/
+void PlaceBlockTask_Reset(void);
 
 PlaceBlockTaskState_t PlaceBlockTask_GetState(void);
 void PlaceBlockTask_Process(void);

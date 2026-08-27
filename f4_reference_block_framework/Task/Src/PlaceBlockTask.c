@@ -131,12 +131,49 @@ void PlaceBlockTask_Process(void)
             }
             break;
 
+        case PLACE_BLOCK_TASK_RESET_TO_SAFE:
+
+            if (arm_state == BLOCK_ARM_READY)
+            {
+                place_block_task_state = PLACE_BLOCK_TASK_IDLE;
+            }
+            break;
+
         case PLACE_BLOCK_TASK_DONE:
         case PLACE_BLOCK_TASK_FAULT:
+            break;
+
+        /* 任务完成或异常，等待外部重新启动任务*/    
+        case PLACE_BLOCK_TASK_ABORTED:
             break;
 
         default:
             place_block_task_state = PLACE_BLOCK_TASK_FAULT;
             break;
     }
+}
+
+void PlaceBlockTask_Stop(void)
+{
+    if (place_block_task_state == PLACE_BLOCK_TASK_IDLE ||
+        place_block_task_state == PLACE_BLOCK_TASK_DONE ||
+        place_block_task_state == PLACE_BLOCK_TASK_FAULT ||
+        place_block_task_state == PLACE_BLOCK_TASK_ABORTED)
+    {
+        return;
+    }
+
+    BlockArm_Stop();
+    place_block_task_state = PLACE_BLOCK_TASK_ABORTED;
+}
+
+void PlaceBlockTask_Reset(void)
+{
+    if (place_block_task_state != PLACE_BLOCK_TASK_ABORTED)
+    {
+        return;
+    }
+
+    BlockArm_Reset();
+    place_block_task_state = PLACE_BLOCK_TASK_RESET_TO_SAFE;
 }

@@ -30,7 +30,7 @@ void PickBlockTask_ConfirmGrab(void);
 /* 操作手发现异常状况，用于停止当前的拾取任务。 */
 void PickBlockTask_Stop(void);
 
-/* 重置任务状态为 IDLE并复位机械臂，允许重新启动。 */
+/* 重置任务状态为 IDLE并复位机械臂，允许重新启动该任务。*/
 void PickBlockTask_Reset(void);
 
 PickBlockTaskState_t PickBlockTask_GetState(void);

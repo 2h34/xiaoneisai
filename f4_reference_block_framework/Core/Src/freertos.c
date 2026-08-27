@@ -61,6 +61,13 @@ const osThreadAttr_t BeepTask_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for BlockArmTask */
+osThreadId_t BlockArmTaskHandle;
+const osThreadAttr_t BlockArmTask_attributes = {
+  .name = "BlockArmTask",
+  .stack_size = 256 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -69,6 +76,7 @@ const osThreadAttr_t BeepTask_attributes = {
 
 void LedWaterTask(void *argument);
 void BeepAlarmTask(void *argument);
+void BlockArmServiceTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -104,6 +112,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of BeepTask */
   BeepTaskHandle = osThreadNew(BeepAlarmTask, NULL, &BeepTask_attributes);
+
+  /* creation of BlockArmTask */
+  BlockArmTaskHandle = osThreadNew(BlockArmServiceTask, NULL, &BlockArmTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */

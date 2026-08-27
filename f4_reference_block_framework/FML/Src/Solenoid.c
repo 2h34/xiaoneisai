@@ -17,7 +17,7 @@ void solenoid_channel_init(Solenoid_t *solenoid, GPIO_TypeDef *gpio_port, uint16
     solenoid->gpio_port = gpio_port;
     solenoid->gpio_pin_sda = gpio_pin_sda;
     solenoid->gpio_pin_clk = gpio_pin_clk;
-    solenoid->data_prve = 0xF0;
+    solenoid->data_prve = 0xF0;  /*保证第一次 0x00 不会被误判为重复数据”的初始哨兵值*/
 }
 // usart_channel=串口号 不需要在cube中配置 直接调用即可
 void solenoid_init(uint8_t usart_channel)
@@ -58,8 +58,10 @@ void solenoid_init(uint8_t usart_channel)
     default:
         break;
     }
-    solenoid_on(usart_channel, 0);
+    solenoid_on(usart_channel, 0); /*初始化发送0x00，一定能发送*/
 }
+
+/*发送数据*/
 void register_updata(Solenoid_t *solenoid, uint8_t *data)
 {
     if (*data == solenoid->data_prve)
@@ -67,7 +69,7 @@ void register_updata(Solenoid_t *solenoid, uint8_t *data)
     solenoid->data_prve = *data;
     for (int i = 0; i < 4; i++)
     {
-        if ((*data & 0x08) == 0x08)
+        if ((*data & 0x08) == 0x08) /*每次都检查当前bit3，检查完左移，即发送顺序bit3,2,1,0*/
         {
             HAL_GPIO_WritePin(solenoid->gpio_port, solenoid->gpio_pin_sda, GPIO_PIN_SET);
         }
