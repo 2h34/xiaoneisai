@@ -384,6 +384,17 @@ bool is_disabled(void){
     return block_arm.state == BLOCK_ARM_DISABLED;
 }
 
+bool is_busy(void){
+    switch (block_arm.state){
+        case BLOCK_ARM_HOMING:
+        case BLOCK_ARM_HOME_TO_SAFE:
+        case BLOCK_ARM_MOVING:
+            return true;
+    }
+
+    return false;
+}
+
 /*均为对外接口*/
 void BlockArm_MoveToLowPickReady(void)
 {

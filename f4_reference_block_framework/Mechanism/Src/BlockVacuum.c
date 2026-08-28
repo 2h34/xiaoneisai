@@ -1,4 +1,5 @@
 #include "BlockVacuum.h"
+#include "Solenoid.h"
 
 /* BlockVacuum 需要长期保存的最小内部数据。 */
 typedef struct
@@ -17,6 +18,7 @@ void BlockVacuum_Init(void)
     block_vacuum.release_count = 0U;
 
     /* TODO: 确认 Solenoid 通道和命令后，在此初始化真实真空气路。 */
+    solenoid_init(1U);
 }
 
 void BlockVacuum_Grab(void)
@@ -30,6 +32,7 @@ void BlockVacuum_Grab(void)
     block_vacuum.state = BLOCK_VACUUM_GRABBING;
 
     /* TODO: 向真实泵阀 Driver 发出建立真空命令。 */
+    solenoid_on(1U, 0x0FU);
 }
 
 void BlockVacuum_Release(void)
@@ -43,6 +46,7 @@ void BlockVacuum_Release(void)
     block_vacuum.state = BLOCK_VACUUM_RELEASING;
 
     /* TODO: 向真实泵阀 Driver 发出释放真空命令。 */
+    solenoid_on(1U, 0x00U);
 }
 
 BlockVacuumState_t BlockVacuum_GetState(void)
@@ -58,7 +62,9 @@ void BlockVacuum_Process(void)
             break;
 
         case BLOCK_VACUUM_GRABBING:
-            block_vacuum.grab_count++;
+            if (block_vacuum.grab_count++ > 300U){
+                block_vacuum.state = BLOCK_VACUUM_GRABBED;
+            }
             /* TODO: 根据压力反馈或确认时间判据进入 GRABBED。 */
             break;
 
@@ -67,7 +73,9 @@ void BlockVacuum_Process(void)
             break;
 
         case BLOCK_VACUUM_RELEASING:
-            block_vacuum.release_count++;
+            if (block_vacuum.release_count++ > 30U){
+                block_vacuum.state = BLOCK_VACUUM_RELEASED;
+            }
             /* TODO: 根据压力反馈或确认时间判据进入 RELEASED。 */
             break;
 

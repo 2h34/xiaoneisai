@@ -47,9 +47,9 @@ void BlockArmServiceTask(void *argument)
   for (;;)
   {
     BlockArm_Process();
-    // BlockVacuum_Process();
-    // PickBlockTask_Process();
-    // PlaceBlockTask_Process();
+    BlockVacuum_Process();
+    PickBlockTask_Process();
+    PlaceBlockTask_Process();
     if (flag == 1)
     {
       BlockArm_Home();

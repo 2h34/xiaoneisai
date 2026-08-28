@@ -51,6 +51,8 @@ void BlockArm_Disable(void);
 void BlockArm_Enable(void);
 /*用于判断是否上电*/
 bool is_disabled(void);
+/*用于判断是否忙碌*/
+bool is_busy(void);
 
 /* 移动到单层大地块（或双层下方块）的取块粗定位姿态。 */
 void BlockArm_MoveToLowPickReady(void);
