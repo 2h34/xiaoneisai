@@ -278,7 +278,7 @@ void BlockArm_Init(DJMotor *dji_motor, Zdrive *zdrive_motor)
 
     block_arm.dji_motor = dji_motor;
     block_arm.zdrive_motor = zdrive_motor;
-    block_arm.state = BLOCK_ARM_UNHOMED;
+    block_arm.state = BLOCK_ARM_DISABLED;
 
     block_arm.dji_current_position = 0.0f;
     block_arm.zdrive_current_position = 0.0f;
@@ -316,6 +316,11 @@ void BlockArm_Home(void)
 
 void BlockArm_Stop(void)
 {
+    if (block_arm.state == BLOCK_ARM_DISABLED)
+    {
+        return;
+    }
+
     if (block_arm.state == BLOCK_ARM_HOMING)
     {
         BlockArm_StopAndHold();
@@ -345,6 +350,34 @@ void BlockArm_Stop(void)
         block_arm.fine_adjust_active = false;
         block_arm.state = BLOCK_ARM_STOPPED;
     }
+}
+
+void BlockArm_Disable(void)
+{
+    // 紧急断电失能。需要重启程序或者Enable才能继续。
+    if (!BlockArm_DriversBound())
+    {
+        block_arm.state = BLOCK_ARM_FAULT;
+        return;
+    }
+
+    /* 两台电机都切到 Disable 模式,释放力矩。 */
+    DJmotor_Disable(block_arm.dji_motor);
+    Zdrive_Disable(block_arm.zdrive_motor);
+
+    block_arm.fine_adjust_active = false;
+    block_arm.reset_to_safe_active = false;
+    block_arm.state = BLOCK_ARM_DISABLED;
+}
+
+void BlockArm_Enable(void)
+{
+    if (block_arm.state != BLOCK_ARM_DISABLED)
+    {
+        return;
+    }
+
+    block_arm.state = BLOCK_ARM_UNHOMED;
 }
 
 /*均为对外接口*/
@@ -511,6 +544,9 @@ void BlockArm_Process(void)
         case BLOCK_ARM_STOPPED:
             /* 停止状态，不执行任何动作，电机使能保持原姿势 */
             BlockArm_ApplyPositionTargets();
+            break;
+
+        case BLOCK_ARM_DISABLED:
             break;
 
         case BLOCK_ARM_FAULT:

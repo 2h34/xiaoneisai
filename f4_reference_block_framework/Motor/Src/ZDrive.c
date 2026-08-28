@@ -398,7 +398,8 @@ static void Zdrive_SwitchMachine(Zdrive *motor, uint8_t id)
 {
     switch (motor->mode)
     {
-    case Zdrive_Disable:
+    case Zdrive_DISABLE:
+        // 由于定义了一个函数，后来发现重名了，于是稍微改了一下大小写
     case Zdrive_Current:
         break;
     case Zdrive_Speed:
@@ -476,7 +477,8 @@ static void Zdrive_RunMachine(Zdrive *motor, uint8_t id)
         }
         break;
 
-    case Zdrive_Disable:
+    case Zdrive_DISABLE:
+    // 同402行的注释
     default:
         motor->mode = Zdrive_Disable;
         break;
@@ -593,6 +595,20 @@ bool Zdrive_IsZeroDone(Zdrive *motor)
     }
 
     return motor->zero.done;
+}
+
+void Zdrive_Disable(Zdrive *motor)
+{
+    if (motor == NULL)
+    {
+        return;
+    }
+    /*原本的stop只是暂停，但是协议里面要求0x01彻底失能，不保持力矩。我加了一个*/
+    motor->Begin = false;
+    motor->mode = Zdrive_Disable;
+    motor->valSetNow.speed_rpm = 0.0f;
+    motor->valSetNow.pos_deg = 0.0f;
+    motor->valSetNow.current_A = 0.0f;
 }
 
 #endif /* USE_ZMDR */

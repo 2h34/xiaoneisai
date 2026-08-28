@@ -138,6 +138,9 @@ extern "C"
     /* 判断寻零是否完成*/
     bool DJmotor_IsZeroDone(DJMotorPointer motor);
 
+    /* 请求彻底失能:退出所有运动模式并每周期发送 0 电流,用于调试急停。 */
+    void DJmotor_Disable(DJMotorPointer motor);
+
 
 #endif /* USE_DJ */
 

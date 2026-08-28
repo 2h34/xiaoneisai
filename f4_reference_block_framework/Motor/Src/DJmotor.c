@@ -445,4 +445,18 @@ bool DJmotor_IsZeroDone(DJMotorPointer motor)
     return motor->statusFlag.ZeroFlag;
 }
 
+void DJmotor_Disable(DJMotorPointer motor)
+{
+    /*原本的stop只是暂停，但是协议里面要求0x01彻底失能，不保持力矩。我加了一个*/
+    if (motor == NULL)
+    {
+        return;
+    }
+
+    motor->Begin = false;
+    motor->MODE_Set = DJ_Disable;
+    motor->valSet.current_raw = 0;
+    motor->valSet.speed_rpm = 0;
+}
+
 #endif /* USE_DJ */

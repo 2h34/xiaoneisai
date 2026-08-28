@@ -16,6 +16,7 @@ typedef enum
     BLOCK_ARM_MOVING,
     BLOCK_ARM_REACHED,
     BLOCK_ARM_STOPPED,
+    BLOCK_ARM_DISABLED,   /* 调试急停:彻底失能,不再下发任何目标 */
     BLOCK_ARM_FAULT
 } BlockArmState_t;
 
@@ -42,6 +43,12 @@ void BlockArm_Home(void);
 /* 停止 BlockArm 的当前动作，使其进入 STOPPED 状态。
  * 若当前状态不允许停止，则忽略本调用。*/
 void BlockArm_Stop(void);
+
+/* 彻底失能:两台电机都切到 Disable 模式,并进入 DISABLED 状态。
+ * DISABLED 状态下 Process() 不再下发任何目标,用于调试时的紧急断电。 */
+void BlockArm_Disable(void);
+/*用于解除DISABLE*/
+void BlockArm_Enable(void);
 
 /* 移动到单层大地块（或双层下方块）的取块粗定位姿态。 */
 void BlockArm_MoveToLowPickReady(void);

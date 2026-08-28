@@ -33,7 +33,7 @@ extern "C"
 
     typedef enum
     {
-        Zdrive_Disable = 0,              // 0失能
+        Zdrive_DISABLE = 0,              // 0失能
         Zdrive_Current,                  // 1扭矩模式
         Zdrive_Speed,                    // 2速度模式
         Zdrive_Postion,                  // 3位置模式
@@ -188,6 +188,9 @@ extern "C"
     void Zdrive_SetZeromode(Zdrive *motor);
     /* 判断寻零是否完成 */
     bool Zdrive_IsZeroDone(Zdrive *motor);
+
+    /* 请求彻底失能:退出所有运动模式并向驱动下发 Disable,用于调试急停。 */
+    void Zdrive_Disable(Zdrive *motor);
 
     void ZdriveSet(float data, uint8_t id, uint8_t set_code);
     void ZdriveAsk(uint8_t id, uint8_t ask_code);
