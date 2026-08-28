@@ -51,7 +51,22 @@ void send_disable_message(CAN_HandleTypeDef *hcan, CAN_TxHeaderTypeDef *TxHeader
     HAL_CAN_AddTxMessage(&hcan1, TxHeader, TxData, TxMailbox);
 }
 
-void Master_message_handler_left(CAN_HandleTypeDef *hcan, CAN_RxHeaderTypeDef RxHeader, uint8_t *RxData)
+void send_receive_message(CAN_HandleTypeDef *hcan, CAN_TxHeaderTypeDef *TxHeader,
+    uint8_t TxData[], uint32_t *TxMailbox, uint8_t process)
+{
+    TxHeader->IDE   = CAN_ID_EXT;
+    TxHeader->RTR   = CAN_RTR_DATA;
+    TxHeader->ExtId = 0x05010100 | process;
+    TxHeader->DLC = 2;
+    TxHeader->TransmitGlobalTime = DISABLE; 
+    TxData[0] = 0x00;
+    TxData[1] = process;
+
+    HAL_CAN_AddTxMessage(&hcan1, TxHeader, TxData, TxMailbox);
+}
+
+void Master_message_handler_left(CAN_HandleTypeDef *hcan, 
+    CAN_RxHeaderTypeDef RxHeader, uint8_t *RxData)
 {
     uint8_t signal = RxHeader.ExtId & 0xFFU;
     CAN_TxHeaderTypeDef TxHeader;
@@ -63,10 +78,12 @@ void Master_message_handler_left(CAN_HandleTypeDef *hcan, CAN_RxHeaderTypeDef Rx
         case 0x01 :{
             if (RxHeader.DLC == 2){
                 if (RxData[0] == DISABLE){
+                    
                     BlockArm_Disable();
                 }
                 else if (RxData[0] == ENABLE){
                     BlockArm_Enable();
+                    BlockArm_Home();
                 }
             }
             break;
@@ -75,10 +92,12 @@ void Master_message_handler_left(CAN_HandleTypeDef *hcan, CAN_RxHeaderTypeDef Rx
         case RESET :{
             if (is_disabled()){
                 send_disable_message(hcan, &TxHeader, TxData, TxMailBox);
+                break;
             }
 
             if ((RxData[0] == BOTHARM || RxData[0] == LEFTARM) && RxData[1] == 0x00){
-                BlockArm_Home();
+                send_receive_message(hcan, &TxHeader, TxData, TxMailBox, RESET);
+                BlockArm_Reset();
             }
             break;
         }
@@ -87,13 +106,16 @@ void Master_message_handler_left(CAN_HandleTypeDef *hcan, CAN_RxHeaderTypeDef Rx
             
             if (is_disabled()){
                 send_disable_message(hcan, &TxHeader, TxData, TxMailBox);
+                break;
             }
             
             if (RxHeader.DLC == 1U){         
                 if (RxData[0] == LOWPICK){
+                    send_receive_message(hcan, &TxHeader, TxData, TxMailBox, LEFT_START_PICK);
                     BlockArm_MoveToLowPickReady();
                     BlockVacuum_Grab();
                 }else if (RxData[0] == HIGHPICK){
+                    send_receive_message(hcan, &TxHeader, TxData, TxMailBox, LEFT_START_PICK);
                     BlockArm_MoveToHighPickReady();
                     BlockVacuum_Grab();
                 }   
@@ -121,14 +143,18 @@ void Master_message_handler_left(CAN_HandleTypeDef *hcan, CAN_RxHeaderTypeDef Rx
 
             if (is_disabled()){
                 send_disable_message(hcan, &TxHeader, TxData, TxMailBox);
+                break;
             }
 
             if (RxHeader.DLC == 1U){
                 if (RxData[0] == BOTTOMPLACE){
+                    send_receive_message(hcan, &TxHeader, TxData, TxMailBox, LEFT_START_PLACE);
                     BlockArm_MoveToPlaceBottomReady();
                 }else if (RxData[0] == LEVEL1PLACE){
+                    send_receive_message(hcan, &TxHeader, TxData, TxMailBox, LEFT_START_PLACE);
                     BlockArm_MoveToPlaceLevel1Ready();
                 }else if (RxData[0] == LEVEL2PLACE){
+                    send_receive_message(hcan, &TxHeader, TxData, TxMailBox, LEFT_START_PLACE);
                     BlockArm_MoveToPlaceLevel2Ready();
                 }
             }
@@ -146,9 +172,11 @@ void Master_message_handler_left(CAN_HandleTypeDef *hcan, CAN_RxHeaderTypeDef Rx
 
             if (is_disabled()){
                 send_disable_message(hcan, &TxHeader, TxData, TxMailBox);
+                break;
             }
 
             if (RxHeader.DLC == 1U){
+                send_receive_message(hcan, &TxHeader, TxData, TxMailBox, LEFT_CONFIRM_RELEASE);
                 BlockVacuum_Release();
             }
             break;
@@ -162,13 +190,14 @@ void Master_message_handler_left(CAN_HandleTypeDef *hcan, CAN_RxHeaderTypeDef Rx
     }
 }
 
-void Master_message_handler_right(CAN_HandleTypeDef *hcan, CAN_RxHeaderTypeDef RxHeader, uint8_t *RxData)
+void Master_message_handler_right(CAN_HandleTypeDef *hcan, 
+    CAN_RxHeaderTypeDef RxHeader, uint8_t *RxData)
 {
     uint8_t signal = RxHeader.ExtId & 0xFFU;
     CAN_TxHeaderTypeDef TxHeader;
     uint32_t TxMailBox;
     uint8_t TxData[8];
-    
+
     switch (signal){
 
         case 0x01 :{
@@ -188,14 +217,15 @@ void Master_message_handler_right(CAN_HandleTypeDef *hcan, CAN_RxHeaderTypeDef R
 
             if (is_disabled()){
                 send_disable_message(hcan, &TxHeader, TxData, TxMailBox);
+                break;
             }
 
             if (
                 (RxData[0] == BOTHARM || RxData[0] == RIGHTARM) && 
                 RxData[1] == 0x00 &&
-                RxHeader.DLC == 2 &&
-                !is_disabled()
+                RxHeader.DLC == 2
             ){
+                send_receive_message(hcan, &TxHeader, TxData, TxMailBox, RESET);
                 BlockArm_Reset();
             }
             break;
@@ -205,13 +235,16 @@ void Master_message_handler_right(CAN_HandleTypeDef *hcan, CAN_RxHeaderTypeDef R
 
             if (is_disabled()){
                 send_disable_message(hcan, &TxHeader, TxData, TxMailBox);
+                break;
             }
 
             if (RxHeader.DLC == 1U){         
                 if (RxData[0] == LOWPICK){
+                    send_receive_message(hcan, &TxHeader, TxData, TxMailBox, RIGHT_START_PICK);
                     BlockArm_MoveToLowPickReady();
                     BlockVacuum_Grab();
                 }else if (RxData[0] == HIGHPICK){
+                    send_receive_message(hcan, &TxHeader, TxData, TxMailBox, RIGHT_START_PICK);
                     BlockArm_MoveToHighPickReady();
                     BlockVacuum_Grab();
                 }   
@@ -239,14 +272,18 @@ void Master_message_handler_right(CAN_HandleTypeDef *hcan, CAN_RxHeaderTypeDef R
 
             if (is_disabled()){
                 send_disable_message(hcan, &TxHeader, TxData, TxMailBox);
+                break;
             }
 
             if (RxHeader.DLC == 1U){
                 if (RxData[0] == BOTTOMPLACE){
+                    send_receive_message(hcan, &TxHeader, TxData, TxMailBox, RIGHT_START_PLACE);
                     BlockArm_MoveToPlaceBottomReady();
                 }else if (RxData[0] == LEVEL1PLACE){
+                    send_receive_message(hcan, &TxHeader, TxData, TxMailBox, RIGHT_START_PLACE);
                     BlockArm_MoveToPlaceLevel1Ready();
                 }else if (RxData[0] == LEVEL2PLACE){
+                    send_receive_message(hcan, &TxHeader, TxData, TxMailBox, RIGHT_START_PLACE);
                     BlockArm_MoveToPlaceLevel2Ready();
                 }
             }
@@ -264,9 +301,11 @@ void Master_message_handler_right(CAN_HandleTypeDef *hcan, CAN_RxHeaderTypeDef R
 
             if (is_disabled()){
                 send_disable_message(hcan, &TxHeader, TxData, TxMailBox);
+                break;
             }
 
             if (RxHeader.DLC == 1U){
+                send_receive_message(hcan, &TxHeader, TxData, TxMailBox, RIGHT_START_PLACE);
                 BlockVacuum_Release();
             }
             break;

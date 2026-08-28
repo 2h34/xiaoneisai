@@ -380,6 +380,10 @@ void BlockArm_Enable(void)
     block_arm.state = BLOCK_ARM_UNHOMED;
 }
 
+bool is_disabled(void){
+    return block_arm.state == BLOCK_ARM_DISABLED;
+}
+
 /*均为对外接口*/
 void BlockArm_MoveToLowPickReady(void)
 {
