@@ -1,11 +1,13 @@
 #include "myostasks.h"
 
 #include "BlockArm.h"
+#include "Solenoid.h"
 
 
 #define BLOCK_ARM_PROCESS_PERIOD_MS  5U
 
 uint8_t BeepAlarmTimes = 0;
+int flag = 0;
 
 void LedWaterTask(void *argument)
 {
@@ -42,7 +44,7 @@ void BlockArmServiceTask(void *argument)
   (void)argument;
   uint32_t next_wake = osKernelGetTickCount();
 
-  int flag = 0;
+ 
 
   for (;;)
   {
@@ -52,9 +54,11 @@ void BlockArmServiceTask(void *argument)
     PlaceBlockTask_Process();
     if (flag == 1)
     {
-      BlockArm_Home();
-      flag = 0;
-    }
+      solenoid_on(1U, 0x0F);
+      // flag = 0;
+    }else if (flag == 0){
+			solenoid_on(1U, 0x00);
+		}
 
     next_wake += BLOCK_ARM_PROCESS_PERIOD_MS;
     osDelayUntil(next_wake);

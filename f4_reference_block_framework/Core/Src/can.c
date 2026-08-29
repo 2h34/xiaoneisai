@@ -78,13 +78,13 @@ void MX_CAN1_Init(void)
   CAN_FilterConfig.FilterBank = 1;                                // 使用第1个筛选器组
   CAN_FilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;           // 位宽
   CAN_FilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;            // 模式（列表/掩码）
-  CAN_FilterConfig.FilterFIFOAssignment = CAN_FILTER_FIFO1;       // 用哪个FIFO的信箱
-  //0x000-0x7FF 11位标准帧
-  //0x00000000-0x1FFFFFFF 29位扩展帧
-  CAN_FilterConfig.FilterIdHigh = (0x000 << 5);                   // 基准高位 FR0高16位
-  CAN_FilterConfig.FilterMaskIdHigh = (0x000 << 5);               // 掩码高位 FR1高16位
-  CAN_FilterConfig.FilterIdLow = (0x000 << 5);                    // 基准低位 FR0低16位
-  CAN_FilterConfig.FilterMaskIdLow = (0x000 << 5);                // 掩码低位 FR1低16位
+  CAN_FilterConfig.FilterFIFOAssignment = CAN_FILTER_FIFO0;       // 送FIFO0，供RxFifo0回调取主控命令
+  // 匹配扩展帧 0x010105xx（xx=操作码，忽略低8位），并锁定IDE=1只放行扩展帧
+  // 扩展帧在32位过滤器布局：FRx[31:3]=29位ID, FRx[2]=IDE, FRx[1]=RTR, FRx[0]=0
+  CAN_FilterConfig.FilterIdHigh = 0x0808;                         // (0x01010500<<3)|0x04 高16位
+  CAN_FilterConfig.FilterMaskIdHigh = 0x0FFF;                     // (0x01FFFF00<<3)|0x04 高16位
+  CAN_FilterConfig.FilterIdLow = 0x2804;                          // (0x01010500<<3)|0x04 低16位
+  CAN_FilterConfig.FilterMaskIdLow = 0xF804;                      // (0x01FFFF00<<3)|0x04 低16位
   if (HAL_CAN_ConfigFilter(&hcan1, &CAN_FilterConfig) != HAL_OK) { // 应用硬件中
       Error_Handler();
   }
@@ -132,7 +132,8 @@ void MX_CAN2_Init(void)
   /* USER CODE BEGIN CAN2_Init 2 */
   CAN_FilterTypeDef CAN_FilterConfig;// 定义过滤器
   /*----------------------------------- 过滤器1 ------------------------------*/
-  CAN_FilterConfig.FilterActivation = ENABLE;                     // 激活过滤器
+  /* DJI 电机在 CAN1(MOTOR_DJI_CAN_BUS=0)，此过滤器在 CAN2 匹配不到任何帧，停用 */
+  CAN_FilterConfig.FilterActivation = DISABLE;                    // 停用过滤器
   CAN_FilterConfig.SlaveStartFilterBank = 14;                     // CAN1 CAN2的过滤器分割线，0-13给CAN1，14-27给CAN2
   CAN_FilterConfig.FilterBank = 14;                                // 使用第14个筛选器组
   CAN_FilterConfig.FilterScale = CAN_FILTERSCALE_16BIT;           // 位宽
@@ -148,14 +149,15 @@ void MX_CAN2_Init(void)
       Error_Handler();
   }
   /*----------------------------------- 过滤器2 ------------------------------*/
+  /* ZDrive 反馈:标准帧 StdId = op_code<<4 | motor_id(1..6)，低4位ID空间1..N。
+     难以用单一掩码精确匹配，故放行全部标准帧到 FIFO1，由 Zdrive_IsOurs 软件过滤 */
   CAN_FilterConfig.FilterActivation = ENABLE;                     // 激活过滤器
   CAN_FilterConfig.SlaveStartFilterBank = 14;                     // CAN1 CAN2的过滤器分割线，0-13给CAN1，14-27给CAN2
   CAN_FilterConfig.FilterBank = 15;                                // 使用第15个筛选器组
   CAN_FilterConfig.FilterScale = CAN_FILTERSCALE_16BIT;           // 位宽
   CAN_FilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;            // 模式（列表/掩码）
   CAN_FilterConfig.FilterFIFOAssignment = CAN_FILTER_FIFO1;       // 用哪个FIFO的信箱
-  //0x000-0x7FF 11位标准帧
-  //0x00000000-0x1FFFFFFF 29位扩展帧
+  // 掩码全0 = 任意标准帧放行（16位模式只匹配标准帧，扩展帧需32位过滤器）
   CAN_FilterConfig.FilterIdHigh = (0x000 << 5);                   // 基准高位 FR0高16位
   CAN_FilterConfig.FilterMaskIdHigh = (0x000 << 5);               // 掩码高位 FR1高16位
   CAN_FilterConfig.FilterIdLow = (0x000 << 5);                    // 基准低位 FR0低16位

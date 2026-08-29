@@ -7,7 +7,7 @@
 #include "Beep.h"
 
 extern uint8_t BeepAlarmTimes;
-
+extern int flag;
 /* 单机械臂的机构服务任务，周期推进状态机。 */
 void BlockArmServiceTask(void *argument);
 
